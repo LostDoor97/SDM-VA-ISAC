@@ -1,0 +1,71 @@
+{
+  "project": "SDM-VA-ISAC",
+  "phase": 3,
+  "scene_variant": "new_scene_dual_node",
+  "scene_xml": "C:\\Users\\AdminFix\\Desktop\\PFA\\phase3\\new.xml",
+  "frequency_hz": 3500000000.0,
+  "bandwidth_hz": 20000000.0,
+  "max_depth": 4,
+  "tx_positions": {
+    "bs0": [
+      -119.55,
+      54.933,
+      22.29
+    ],
+    "bs1": [
+      47.9,
+      110.0,
+      19.5
+    ]
+  },
+  "sensor_nodes": {
+    "ped_a": [
+      -52.36180877685547,
+      53.756492614746094,
+      4.400164544582367
+    ],
+    "ped_b": [
+      -57.797027587890625,
+      113.96261596679688,
+      4.398263990879059
+    ]
+  },
+  "module1a_radar_points": 20899,
+  "module1a_radar_class_breakdown": {
+    "facade": 17427,
+    "ground": 3119,
+    "target": 353
+  },
+  "module1b_detections_by_node": {
+    "tx1": 1,
+    "tx2": 1,
+    "tx3": 1,
+    "tx4": 0,
+    "ped_a": 2,
+    "ped_b": 2
+  },
+  "module2_fused_objects": 20899,
+  "module2_vision_matched": 353,
+  "module3_grid_shape": [
+    169,
+    179,
+    6
+  ],
+  "module3_classes": [
+    "ground",
+    "facade",
+    "target",
+    "car",
+    "pedestrian",
+    "unknown"
+  ],
+  "module3_cells_observed": 594,
+  "module3_cells_total": 30251,
+  "validation": {
+    "module1a_radar_pointcloud_extracted": true,
+    "module1b_vision_pipeline_executed": true,
+    "module2_fusion_executed": true,
+    "module2_vision_matches_all_target_points": true,
+    "module3_semantic_map_built": true
+  }
+}
