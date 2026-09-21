@@ -5,3 +5,9 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .claude/
+
+# Large regenerable artifacts (synthetic datasets, archived scene, rendered frames, model checkpoints)
+phase3/yolo_dataset_v2/images/
+phase3/archive_old_scene/
+phase3/frames_v2/
+*.pt

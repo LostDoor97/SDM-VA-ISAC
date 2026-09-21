@@ -1,0 +1,178 @@
+{
+  "n_frames": 6,
+  "actor_speed_per_frame": {
+    "car": 1.5,
+    "pedestrian_a": 0.8,
+    "pedestrian_b": 0.8
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "radar_points": 20899,
+      "detections_by_node": {
+        "tx1": 1,
+        "tx2": 1,
+        "tx3": 1,
+        "tx4": 0,
+        "ped_a": 2,
+        "ped_b": 2
+      },
+      "fused_objects": 20899,
+      "vision_matched": 353,
+      "actor_xy": {
+        "car": [
+          -34.06949234008789,
+          92.74851989746094
+        ],
+        "pedestrian_a": [
+          -46.36180877685547,
+          60.756492614746094
+        ],
+        "pedestrian_b": [
+          -51.797027587890625,
+          106.96261596679688
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "radar_points": 20810,
+      "detections_by_node": {
+        "tx1": 1,
+        "tx2": 2,
+        "tx3": 1,
+        "tx4": 0,
+        "ped_a": 2,
+        "ped_b": 2
+      },
+      "fused_objects": 20810,
+      "vision_matched": 315,
+      "actor_xy": {
+        "car": [
+          -35.360148429870605,
+          91.98418563604355
+        ],
+        "pedestrian_a": [
+          -46.29192597270012,
+          61.55343451499939
+        ],
+        "pedestrian_b": [
+          -51.51066083908081,
+          106.2156259059906
+        ]
+      }
+    },
+    {
+      "frame": 2,
+      "radar_points": 20845,
+      "detections_by_node": {
+        "tx1": 1,
+        "tx2": 3,
+        "tx3": 1,
+        "tx4": 0,
+        "ped_a": 2,
+        "ped_b": 2
+      },
+      "fused_objects": 20845,
+      "vision_matched": 331,
+      "actor_xy": {
+        "car": [
+          -36.65080451965332,
+          91.21985137462616
+        ],
+        "pedestrian_a": [
+          -46.22204316854477,
+          62.35037641525268
+        ],
+        "pedestrian_b": [
+          -51.224294090270995,
+          105.46863584518432
+        ]
+      }
+    },
+    {
+      "frame": 3,
+      "radar_points": 20846,
+      "detections_by_node": {
+        "tx1": 1,
+        "tx2": 4,
+        "tx3": 2,
+        "tx4": 0,
+        "ped_a": 2,
+        "ped_b": 2
+      },
+      "fused_objects": 20846,
+      "vision_matched": 328,
+      "actor_xy": {
+        "car": [
+          -37.941460609436035,
+          90.45551711320877
+        ],
+        "pedestrian_a": [
+          -46.15216036438942,
+          63.147318315505984
+        ],
+        "pedestrian_b": [
+          -50.93792734146118,
+          104.72164578437805
+        ]
+      }
+    },
+    {
+      "frame": 4,
+      "radar_points": 20845,
+      "detections_by_node": {
+        "tx1": 3,
+        "tx2": 3,
+        "tx3": 2,
+        "tx4": 0,
+        "ped_a": 2,
+        "ped_b": 2
+      },
+      "fused_objects": 20845,
+      "vision_matched": 322,
+      "actor_xy": {
+        "car": [
+          -39.23211669921875,
+          89.69118285179138
+        ],
+        "pedestrian_a": [
+          -46.08227756023407,
+          63.94426021575928
+        ],
+        "pedestrian_b": [
+          -50.651560592651364,
+          103.97465572357177
+        ]
+      }
+    },
+    {
+      "frame": 5,
+      "radar_points": 21002,
+      "detections_by_node": {
+        "tx1": 3,
+        "tx2": 3,
+        "tx3": 3,
+        "tx4": 0,
+        "ped_a": 2,
+        "ped_b": 2
+      },
+      "fused_objects": 21002,
+      "vision_matched": 391,
+      "actor_xy": {
+        "car": [
+          -40.522772789001465,
+          88.926848590374
+        ],
+        "pedestrian_a": [
+          -46.01239475607872,
+          64.74120211601257
+        ],
+        "pedestrian_b": [
+          -50.36519384384155,
+          103.2276656627655
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,422 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scene version="2.1.0">
+
+
+
+
+
+
+	<integrator type="path" id="elm__0" name="elm__0">
+		<integer name="max_depth" value="12" />
+	</integrator>
+
+
+
+	<bsdf type="twosided" id="mat-itu_metal" name="mat-itu_metal">
+		<bsdf type="principled" name="bsdf">
+			<rgb value="0.898039 0.356863 0.027451" name="base_color" />
+			<float name="spec_tint" value="0.000000" />
+			<float name="spec_trans" value="0.000000" />
+			<float name="metallic" value="1.000000" />
+			<float name="anisotropic" value="0.000000" />
+			<float name="roughness" value="0.360000" />
+			<float name="sheen" value="0.000000" />
+			<float name="sheen_tint" value="0.500000" />
+			<float name="clearcoat" value="0.000000" />
+			<float name="clearcoat_gloss" value="0.000900" />
+			<float name="specular" value="1.000000" />
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-itu_car_wood" name="mat-itu_car_wood">
+		<string name="type" value="wood" /><bsdf type="principled" name="bsdf">
+			<rgb value="0.039433 0.072226 0.078431" name="base_color" />
+			<float name="spec_tint" value="0.000000" />
+			<float name="spec_trans" value="0.000000" />
+			<float name="metallic" value="1.000000" />
+			<float name="anisotropic" value="0.000000" />
+			<float name="roughness" value="0.360000" />
+			<float name="sheen" value="0.000000" />
+			<float name="sheen_tint" value="0.500000" />
+			<float name="clearcoat" value="0.000000" />
+			<float name="clearcoat_gloss" value="0.000900" />
+			<float name="specular" value="1.000000" />
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-itu_glass" name="mat-itu_glass">
+		<bsdf type="principled" name="bsdf">
+			<rgb value="0.549020 0.929412 0.211765" name="base_color" />
+			<float name="spec_tint" value="0.000000" />
+			<float name="spec_trans" value="0.000000" />
+			<float name="metallic" value="1.000000" />
+			<float name="anisotropic" value="0.000000" />
+			<float name="roughness" value="0.737157" />
+			<float name="sheen" value="0.000000" />
+			<float name="sheen_tint" value="0.500000" />
+			<float name="clearcoat" value="0.000000" />
+			<float name="clearcoat_gloss" value="0.000900" />
+			<float name="specular" value="0.001000" />
+		</bsdf>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-itu_brick" name="mat-itu_brick">
+		<rgb value="0.063247 1.000000 0.633818" name="reflectance" />
+	</bsdf>
+	<bsdf type="diffuse" id="mat-itu_ceiling_board" name="mat-itu_ceiling_board">
+		<rgb value="0.066362 0.057921 0.049411" name="reflectance" />
+	</bsdf>
+	<bsdf type="twosided" id="mat-itu_very_dry_ground" name="mat-itu_very_dry_ground">
+		<bsdf type="principled" name="bsdf">
+			<rgb value="0.753057 0.800000 0.232713" name="base_color" />
+			<float name="spec_tint" value="0.000000" />
+			<float name="spec_trans" value="0.000000" />
+			<float name="metallic" value="0.000000" />
+			<float name="anisotropic" value="0.000000" />
+			<float name="roughness" value="0.250000" />
+			<float name="sheen" value="0.000000" />
+			<float name="sheen_tint" value="0.500000" />
+			<float name="clearcoat" value="0.000000" />
+			<float name="clearcoat_gloss" value="0.000900" />
+			<float name="specular" value="0.500000" />
+		</bsdf>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-itu_concrete" name="mat-itu_concrete">
+		<rgb value="0.086500 0.090842 0.088656" name="reflectance" />
+	</bsdf>
+	<bsdf type="twosided" id="mat-itu_ped_a_wood" name="mat-itu_ped_a_wood">
+		<string name="type" value="wood" /><bsdf type="principled" name="bsdf">
+			<rgb value="0.422812 0.200965 0.158100" name="base_color" />
+			<float name="spec_tint" value="0.000000" />
+			<float name="spec_trans" value="0.000000" />
+			<float name="metallic" value="1.000000" />
+			<float name="anisotropic" value="0.000000" />
+			<float name="roughness" value="0.360000" />
+			<float name="sheen" value="0.000000" />
+			<float name="sheen_tint" value="0.500000" />
+			<float name="clearcoat" value="0.000000" />
+			<float name="clearcoat_gloss" value="0.000900" />
+			<float name="specular" value="1.000000" />
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-itu_ped_B_wood" name="mat-itu_ped_B_wood">
+		<string name="type" value="wood" /><bsdf type="principled" name="bsdf">
+			<rgb value="0.373818 0.239643 0.322631" name="base_color" />
+			<float name="spec_tint" value="0.000000" />
+			<float name="spec_trans" value="0.000000" />
+			<float name="metallic" value="1.000000" />
+			<float name="anisotropic" value="0.000000" />
+			<float name="roughness" value="0.360000" />
+			<float name="sheen" value="0.000000" />
+			<float name="sheen_tint" value="0.500000" />
+			<float name="clearcoat" value="0.000000" />
+			<float name="clearcoat_gloss" value="0.000900" />
+			<float name="specular" value="1.000000" />
+		</bsdf>
+	</bsdf>
+
+
+
+
+
+
+	<shape type="ply" id="elm__4" name="elm__4">
+		<string name="filename" value="meshes/car_body-itu_metal.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__5" name="elm__5">
+		<string name="filename" value="meshes/car_body-car_wood.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__6" name="elm__6">
+		<string name="filename" value="meshes/car_body-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__7" name="elm__7">
+		<string name="filename" value="meshes/door_left-itu_metal.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__8" name="elm__8">
+		<string name="filename" value="meshes/door_left-car_wood.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__9" name="elm__9">
+		<string name="filename" value="meshes/door_left-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__10" name="elm__10">
+		<string name="filename" value="meshes/hood.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__11" name="elm__11">
+		<string name="filename" value="meshes/rear_bumper.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__12" name="elm__12">
+		<string name="filename" value="meshes/viper_01.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__13" name="elm__13">
+		<string name="filename" value="meshes/viper_02.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__14" name="elm__14">
+		<string name="filename" value="meshes/front_bumper.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__15" name="elm__15">
+		<string name="filename" value="meshes/number_plate.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__16" name="elm__16">
+		<string name="filename" value="meshes/bottom.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__17" name="elm__17">
+		<string name="filename" value="meshes/wheel_00.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__18" name="elm__18">
+		<string name="filename" value="meshes/wheel_01.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__19" name="elm__19">
+		<string name="filename" value="meshes/wheel_02.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__20" name="elm__20">
+		<string name="filename" value="meshes/wheel_03.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__21" name="elm__21">
+		<string name="filename" value="meshes/interior_01-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__22" name="elm__22">
+		<string name="filename" value="meshes/interior_01-car_wood.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__23" name="elm__23">
+		<string name="filename" value="meshes/interior_00-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__24" name="elm__24">
+		<string name="filename" value="meshes/interior_00-car_wood.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__25" name="elm__25">
+		<string name="filename" value="meshes/back_door.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__26" name="elm__26">
+		<string name="filename" value="meshes/lights_00.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__27" name="elm__27">
+		<string name="filename" value="meshes/railings.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__28" name="elm__28">
+		<string name="filename" value="meshes/logo_01.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__29" name="elm__29">
+		<string name="filename" value="meshes/lights_01.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__30" name="elm__30">
+		<string name="filename" value="meshes/lights_02.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__31" name="elm__31">
+		<string name="filename" value="meshes/lights_03.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__32" name="elm__32">
+		<string name="filename" value="meshes/lights_04.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__33" name="elm__33">
+		<string name="filename" value="meshes/lights_05.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__34" name="elm__34">
+		<string name="filename" value="meshes/door_right-itu_metal.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__35" name="elm__35">
+		<string name="filename" value="meshes/door_right-car_wood.ply" />
+		<ref id="mat-itu_car_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__36" name="elm__36">
+		<string name="filename" value="meshes/door_right-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__37" name="elm__37">
+		<string name="filename" value="meshes/glass_02-itu_metal.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__38" name="elm__38">
+		<string name="filename" value="meshes/glass_02-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__39" name="elm__39">
+		<string name="filename" value="meshes/glass_01.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__40" name="elm__40">
+		<string name="filename" value="meshes/glass_03-itu_glass.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__41" name="elm__41">
+		<string name="filename" value="meshes/glass_03-itu_metal.ply" />
+		<ref id="mat-itu_metal" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__42" name="elm__42">
+		<string name="filename" value="meshes/glass_00.ply" />
+		<ref id="mat-itu_glass" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__45" name="elm__45">
+		<string name="filename" value="meshes/map_18_osm_buildings-itu_brick.ply" />
+		<boolean name="face_normals" value="true" />
+		<ref id="mat-itu_brick" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__46" name="elm__46">
+		<string name="filename" value="meshes/map_18_osm_buildings-itu_ceiling_board.ply" />
+		<boolean name="face_normals" value="true" />
+		<ref id="mat-itu_ceiling_board" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__48" name="elm__48">
+		<string name="filename" value="meshes/Plane.ply" />
+		<boolean name="face_normals" value="true" />
+		<ref id="mat-itu_very_dry_ground" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__50" name="elm__50">
+		<string name="filename" value="meshes/map_19_osm_roads_primary.ply" />
+		<ref id="mat-itu_concrete" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__51" name="elm__51">
+		<string name="filename" value="meshes/map_19_osm_roads_residential.ply" />
+		<ref id="mat-itu_concrete" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__53" name="elm__53">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__54" name="elm__54">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-001.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__55" name="elm__55">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-002.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__56" name="elm__56">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-003.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__57" name="elm__57">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-004.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__58" name="elm__58">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-005.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__59" name="elm__59">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-006.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__60" name="elm__60">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-007.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__61" name="elm__61">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-008.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__62" name="elm__62">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-009.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__63" name="elm__63">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-010.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__64" name="elm__64">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-011.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__65" name="elm__65">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-012.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__66" name="elm__66">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-013.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__67" name="elm__67">
+		<string name="filename" value="meshes/man_in_suit_A-ped_a_wood-014.ply" />
+		<ref id="mat-itu_ped_a_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__69" name="elm__69">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__70" name="elm__70">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-001.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__71" name="elm__71">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-002.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__72" name="elm__72">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-003.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__73" name="elm__73">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-004.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__74" name="elm__74">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-005.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__75" name="elm__75">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-006.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__76" name="elm__76">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-007.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__77" name="elm__77">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-008.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__78" name="elm__78">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-009.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__79" name="elm__79">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-010.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__80" name="elm__80">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-011.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__81" name="elm__81">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-012.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__82" name="elm__82">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-013.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+	<shape type="ply" id="elm__83" name="elm__83">
+		<string name="filename" value="meshes/man_in_suit_B-ped_B_wood-014.ply" />
+		<ref id="mat-itu_ped_B_wood" name="bsdf" />
+	</shape>
+
+
+
+</scene>

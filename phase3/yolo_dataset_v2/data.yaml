@@ -1,0 +1,6 @@
+path: C:/Users/AdminFix/Desktop/PFA/phase3/yolo_dataset_v2
+train: images/train
+val: images/val
+names:
+  0: car
+  1: pedestrian

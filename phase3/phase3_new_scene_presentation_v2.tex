@@ -1,0 +1,1514 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{SDM-VA-ISAC --- Phase 3 : Pipeline de Perception Multimodale\\ \large Fusion Sémantique ISAC + Vision, Nouvelle Scène}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \section{SDM-VA-ISAC --- Phase 3 (nouvelle scène) : Fusion Sémantique
+Multi-Modale, déploiement
+dual-nœud}\label{sdm-va-isac-phase-3-nouvelle-scuxe8ne-fusion-suxe9mantique-multi-modale-duxe9ploiement-dual-nux153ud}
+
+\textbf{Scène :} \texttt{phase3/new.xml} --- reconstruite entièrement
+depuis BlOSM + import véhicule/piétons, avec une attention particulière
+portée dès la conception aux exigences de Sionna : matériaux radio
+conformes à la convention \texttt{itu\_*}, acteurs dynamiques (voiture +
+2 piétons) portés par des matériaux Blender dédiés pour un déplacement
+indépendant, et routes exportées en maillages directs plutôt qu'en
+instances.
+
+\textbf{Statut :} \textbf{[OK]} Module 1a (ISAC), \textbf{[OK]} Module 1b (vision), \textbf{[OK]} Module
+2 (fusion), \textbf{[OK]} Module 3 (carte sémantique), \textbf{[TODO]} Module 4/5 (squelettes
+JSCC / interface AGI), \textbf{[OK]} Extension §8 (simulation dynamique
+multi-frame, 4 nœuds) --- pipeline validé de bout en bout : détections
+vision réelles sur les 4 nœuds, fusion radar$\leftrightarrow$vision effective (181/181
+points cibles ISAC correctement raffinés par la vision, aucune
+contamination des points statiques).
+
+\textbf{Version :} document de synthèse --- présentation complète du
+pipeline Phase 3 sur la nouvelle scène, squelettes Module 4/5 et
+extension dynamique multi-frame inclus, en une seule pièce.
+
+\subsubsection{Architecture : 2 nœuds larges + 2 nœuds capteurs dédiés
+piétons}\label{architecture-2-nux153uds-larges-2-nux153uds-capteurs-duxe9diuxe9s-piuxe9tons}
+
+Plutôt qu'une seule BS, ce notebook déploie \textbf{deux nœuds de
+sensing} (\texttt{bs0}/TX1, \texttt{bs1}/TX2), chacun monostatique
+(récepteur co-localisé) avec une caméra vision co-localisée cadrée sur
+le centroïde des 3 acteurs (voiture + 2 piétons). À
+\textasciitilde85-105 m de distance, un piéton ne subtend qu'environ
+0.4° --- trop petit pour qu'un FOV plus étroit résolve seul le problème
+(question de résolution physique du capteur, pas de cadrage). On ajoute
+donc \textbf{2 nœuds capteurs légers dédiés} (récepteur + caméra,
+\textbf{pas} une BS complète --- irréaliste de déployer un réseau
+d'antennes complet à côté de chaque piéton), positionnés à
+\textasciitilde10 m de chaque piéton : cela résout à la fois la densité
+de points radar \textbf{et} la résolution visuelle, et comme récepteur
+et caméra sont co-localisés, la condition « le radar et la vision
+doivent couvrir la même région » (cf.~leçon de la scène précédente)
+reste vérifiée partout.
+
+\subsubsection{Choix de conception et exigences techniques
+clés}\label{choix-de-conception-et-exigences-techniques-cluxe9s}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Conformité des matériaux radio} : chaque surface (sol, routes,
+  bâtiments) porte un matériau nommé selon la convention \texttt{itu\_*}
+  de Sionna, condition requise pour que \texttt{load\_scene()} résolve
+  correctement les propriétés électromagnétiques de chaque matériau.
+\item
+  \textbf{Indépendance des acteurs dynamiques} : la voiture et chaque
+  piéton portent un matériau Blender \textbf{dédié} (\texttt{car\_wood},
+  \texttt{ped\_a\_wood}, \texttt{ped\_B\_wood}), garantissant qu'ils
+  restent des maillages distincts, déplaçables indépendamment. Ces
+  matériaux personnalisés sont reconnectés aux propriétés EM ITU réelles
+  via un patch XML (\texttt{fix\_new\_export.py}) : Sionna reconnaît les
+  noms commençant par \texttt{itu\_} correspondant exactement à une clé
+  connue, avec un override explicite
+  \texttt{\textless{}string\ name="type"\ value="wood"/\textgreater{}}
+  pour un nom personnalisé.
+\item
+  \textbf{Maillages directs pour les routes} : géométrie explicite
+  (\texttt{Object\ →\ Convert\ →\ Mesh} dans Blender) plutôt
+  qu'instances Mitsuba, format requis par le solveur de trajets Sionna.
+\item
+  \textbf{Dégagement d'antenne réaliste} : les nœuds TX montés en
+  toiture incluent une clearance de mât de +1.5 m au-dessus de la
+  surface du toit --- cohérent avec un déploiement d'antenne réel
+  (jamais posée à plat sur le tablier) et nécessaire à un calcul de
+  trajets radio correct depuis chaque nœud.
+\item
+  \textbf{Rendu caméra fidèle pour les nœuds co-localisés} :
+  \texttt{show\_devices=False} pour que chaque caméra, co-localisée avec
+  son nœud de sensing, affiche uniquement la scène réelle --- sans les
+  icônes de visualisation des dispositifs radio qu'une vraie caméra ne
+  verrait de toute façon pas.
+\item
+  \textbf{Garde-fou anti-confusion de profondeur (Module 2)} : la vision
+  ne raffine que les points déjà classés \texttt{target} par l'ISAC ---
+  un point radar ayant rebondi sur une façade ou le sol reste classé
+  comme tel, quel que soit son alignement à l'écran avec une détection
+  vision. Ce garde-fou maintient le raffinement vision physiquement
+  cohérent malgré la simplification du modèle caméra sténopé (sans
+  gestion explicite de la profondeur/occlusion).
+\item
+  \textbf{Fallback ISAC découplé de la vérité terrain} :
+  \texttt{GROUP\_TO\_CLASS} mappe voiture/piéton\_a/piéton\_b sur la
+  classe générique \texttt{target}, jamais directement sur
+  ``car''/``pedestrian'' --- un radar réel ne connaît que sa réponse RF,
+  pas l'identité sémantique fine d'un acteur. Seule la vision produit
+  les étiquettes fines, ce qui rend \(\Delta_{VA}\) (gain vision-assist,
+  Module 6) mesurable honnêtement.
+\end{itemize}
+
+\subsubsection{Détecteur vision}\label{duxe9tecteur-vision}
+
+Poids YOLOv8 fine-tunés sur un jeu de données synthétique auto-annoté
+généré depuis ce pipeline (\texttt{gen\_yolo\_dataset\_v2.py} +
+\texttt{finetune\_yolo\_v2.py}) : mAP50=0.965, mAP50-95=0.887 sur le
+split de validation. Contrairement à \texttt{yolov8n-seg}, on fine-tune
+un modèle de détection pure (\texttt{yolov8n}) : le pipeline ne consomme
+jamais \texttt{res.masks}, seulement \texttt{res.boxes}.
+
+    \subsection{1. Imports et configuration}\label{imports-et-configuration}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{annotations}
+
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{json}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{sys}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{time}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{types}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{collections}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{Counter}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{pathlib}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{Path}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{spatial}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{cKDTree}
+
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{mitsuba}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{mi}
+
+\PY{k}{try}\PY{p}{:}
+    \PY{n}{mi}\PY{o}{.}\PY{n}{set\PYZus{}variant}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda\PYZus{}ad\PYZus{}mono\PYZus{}polarized}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Variante GPU activee : }\PY{l+s+si}{\PYZob{}}\PY{n}{mi}\PY{o}{.}\PY{n}{variant}\PY{p}{(}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CUDA indisponible (}\PY{l+s+si}{\PYZob{}}\PY{n}{e}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{), repli sur LLVM CPU}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{mi}\PY{o}{.}\PY{n}{set\PYZus{}variant}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{llvm\PYZus{}ad\PYZus{}mono\PYZus{}polarized}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sionna}\PY{n+nn}{.}\PY{n+nn}{rt}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{load\PYZus{}scene}\PY{p}{,} \PY{n}{Transmitter}\PY{p}{,} \PY{n}{Receiver}\PY{p}{,} \PY{n}{PlanarArray}\PY{p}{,} \PY{n}{PathSolver}\PY{p}{,} \PY{n}{Camera}
+
+\PY{n}{WORKSPACE} \PY{o}{=} \PY{n}{Path}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{Users}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{AdminFix}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{Desktop}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{PFA}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{=} \PY{n}{WORKSPACE} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{phase3}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{SCENE\PYZus{}XML} \PY{o}{=} \PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{new.xml}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n}{FREQUENCY\PYZus{}HZ} \PY{o}{=} \PY{l+m+mf}{3.5e9}  \PY{c+c1}{\PYZsh{} NOTE : le cahier des charges vise 28GHz, mais itu\PYZus{}very\PYZus{}dry\PYZus{}ground (materiau du}
+                      \PY{c+c1}{\PYZsh{} sol) n\PYZsq{}est defini par l\PYZsq{}ITU\PYZhy{}R P.2040 que pour 1\PYZhy{}10GHz \PYZhy{}\PYZhy{} passer a 28GHz demande}
+                      \PY{c+c1}{\PYZsh{} de changer d\PYZsq{}abord le materiau du sol pour un materiau valide en mmWave (ex.}
+                      \PY{c+c1}{\PYZsh{} itu\PYZus{}concrete, valide 1\PYZhy{}100GHz). On reste a 3.5GHz pour l\PYZsq{}instant.}
+\PY{n}{BANDWIDTH\PYZus{}HZ} \PY{o}{=} \PY{l+m+mf}{20e6}
+\PY{n}{MAX\PYZus{}DEPTH} \PY{o}{=} \PY{l+m+mi}{4}
+\PY{n}{IMG\PYZus{}W}\PY{p}{,} \PY{n}{IMG\PYZus{}H} \PY{o}{=} \PY{l+m+mi}{1280}\PY{p}{,} \PY{l+m+mi}{960}
+
+\PY{k}{assert} \PY{n}{SCENE\PYZus{}XML}\PY{o}{.}\PY{n}{exists}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Fichier introuvable : }\PY{l+s+si}{\PYZob{}}\PY{n}{SCENE\PYZus{}XML}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scene : }\PY{l+s+si}{\PYZob{}}\PY{n}{SCENE\PYZus{}XML}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+jitc\_llvm\_init(): LLVM API initialization failed ..
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Variante GPU activee : cuda\_ad\_mono\_polarized
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Scene : C:\textbackslash{}Users\textbackslash{}AdminFix\textbackslash{}Desktop\textbackslash{}PFA\textbackslash{}phase3\textbackslash{}new.xml
+    \end{Verbatim}
+
+    \subsection{2. Module 1a --- Acquisition ISAC (Sionna
+RT)}\label{module-1a-acquisition-isac-sionna-rt}
+
+Chargement de la scène, regroupement des acteurs par \textbf{matériau
+radio} (plus simple que le ré-analyse XML par nom de fichier utilisée
+sur la scène précédente : chaque acteur a maintenant un matériau dédié
+--- \texttt{itu\_metal}/\texttt{itu\_glass}/\texttt{itu\_car\_wood} pour
+la voiture, \texttt{itu\_ped\_a\_wood} / \texttt{itu\_ped\_B\_wood} pour
+les piétons), puis déploiement des 2 nœuds BS + 2 nœuds capteurs
+piétons.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Chargement de la scene...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+\PY{n}{scene} \PY{o}{=} \PY{n}{load\PYZus{}scene}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{SCENE\PYZus{}XML}\PY{p}{)}\PY{p}{,} \PY{n}{merge\PYZus{}shapes}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{remove\PYZus{}duplicate\PYZus{}vertices}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{frequency} \PY{o}{=} \PY{n}{FREQUENCY\PYZus{}HZ}
+\PY{n}{scene}\PY{o}{.}\PY{n}{bandwidth} \PY{o}{=} \PY{n}{BANDWIDTH\PYZus{}HZ}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scene chargee en }\PY{l+s+si}{\PYZob{}}\PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{t0}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ s (}\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{scene}\PY{o}{.}\PY{n}{objects}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ objets)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{scene}\PY{o}{.}\PY{n}{tx\PYZus{}array} \PY{o}{=} \PY{n}{PlanarArray}\PY{p}{(}\PY{n}{num\PYZus{}rows}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{,} \PY{n}{num\PYZus{}cols}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{,} \PY{n}{vertical\PYZus{}spacing}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{horizontal\PYZus{}spacing}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,}
+                              \PY{n}{pattern}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tr38901}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{polarization}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VH}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{rx\PYZus{}array} \PY{o}{=} \PY{n}{PlanarArray}\PY{p}{(}\PY{n}{num\PYZus{}rows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{num\PYZus{}cols}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{vertical\PYZus{}spacing}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{horizontal\PYZus{}spacing}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,}
+                              \PY{n}{pattern}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{iso}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{polarization}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{V}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Regroupement par materiau radio (chaque acteur a un materiau dedie \PYZhy{}\PYZhy{} pas besoin de reparser le XML) \PYZhy{}\PYZhy{}}
+\PY{n}{ACTOR\PYZus{}MATERIALS} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{car}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}metal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}glass}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}car\PYZus{}wood}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}ped\PYZus{}a\PYZus{}wood}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}ped\PYZus{}B\PYZus{}wood}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+\PY{p}{\PYZcb{}}
+\PY{n}{group\PYZus{}objects} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{g}\PY{p}{:} \PY{p}{[}\PY{p}{]} \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{obj} \PY{o+ow}{in} \PY{n}{scene}\PY{o}{.}\PY{n}{objects}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{matname} \PY{o}{=} \PY{n}{obj}\PY{o}{.}\PY{n}{radio\PYZus{}material}\PY{o}{.}\PY{n}{name}
+    \PY{k}{for} \PY{n}{g}\PY{p}{,} \PY{n}{matset} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{n}{matname} \PY{o+ow}{in} \PY{n}{matset}\PY{p}{:}
+            \PY{n}{group\PYZus{}objects}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{obj}\PY{p}{)}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{\PYZus{}group\PYZus{}centroid}\PY{p}{(}\PY{n}{objs}\PY{p}{)}\PY{p}{:}
+    \PY{n}{mins} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{o}\PY{o}{.}\PY{n}{mi\PYZus{}mesh}\PY{o}{.}\PY{n}{bbox}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{min}\PY{p}{)}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{o} \PY{o+ow}{in} \PY{n}{objs}\PY{p}{]}\PY{p}{)}
+    \PY{n}{maxs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{o}\PY{o}{.}\PY{n}{mi\PYZus{}mesh}\PY{o}{.}\PY{n}{bbox}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{max}\PY{p}{)}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{o} \PY{o+ow}{in} \PY{n}{objs}\PY{p}{]}\PY{p}{)}
+    \PY{k}{return} \PY{p}{(}\PY{n}{mins}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)} \PY{o}{+} \PY{n}{maxs}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}
+
+\PY{n}{group\PYZus{}centroid} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{g}\PY{p}{:} \PY{n}{\PYZus{}group\PYZus{}centroid}\PY{p}{(}\PY{n}{objs}\PY{p}{)} \PY{k}{for} \PY{n}{g}\PY{p}{,} \PY{n}{objs} \PY{o+ow}{in} \PY{n}{group\PYZus{}objects}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{g}\PY{p}{,} \PY{n}{c} \PY{o+ow}{in} \PY{n}{group\PYZus{}centroid}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  acteur }\PY{l+s+s2}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{: }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{group\PYZus{}objects}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ shapes, centroide }\PY{l+s+si}{\PYZob{}}\PY{n}{c}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{actors\PYZus{}centroid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n}{group\PYZus{}centroid}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroide des 3 acteurs (cible camera large) : }\PY{l+s+si}{\PYZob{}}\PY{n}{actors\PYZus{}centroid}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Chargement de la scene{\ldots}
+Scene chargee en 0.18 s (74 objets)
+  acteur 'car': 39 shapes, centroide [-34.07  92.75   1.65]
+  acteur 'pedestrian\_a': 15 shapes, centroide [-46.36  60.76   0.9 ]
+  acteur 'pedestrian\_b': 15 shapes, centroide [-51.8  106.96   0.9 ]
+Centroide des 3 acteurs (cible camera large) : [-44.08  86.82   1.15]
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Coefficients de diffusion non nuls sur les materiaux dynamiques \PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Requis pour que le solveur capture les rebonds diffus sur des cibles petites et irregulieres}
+\PY{c+c1}{\PYZsh{} (voiture, pietons) : la reflexion speculaire seule ne suffit pas pour ce type de geometrie.}
+\PY{k}{for} \PY{n}{matname} \PY{o+ow}{in} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}metal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}glass}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}car\PYZus{}wood}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}ped\PYZus{}a\PYZus{}wood}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}ped\PYZus{}B\PYZus{}wood}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+    \PY{n}{scene}\PY{o}{.}\PY{n}{radio\PYZus{}materials}\PY{p}{[}\PY{n}{matname}\PY{p}{]}\PY{o}{.}\PY{n}{scattering\PYZus{}coefficient} \PY{o}{=} \PY{l+m+mf}{0.4}
+\PY{c+c1}{\PYZsh{} Batiments (facades) : coefficient plus modeste (0.2) pour une couverture plus homogene des facades.}
+\PY{c+c1}{\PYZsh{} Sans cela, itu\PYZus{}brick/itu\PYZus{}ceiling\PYZus{}board restent a leur defaut ITU de 0 (reflexion speculaire pure) :}
+\PY{c+c1}{\PYZsh{} seules les facades dont l\PYZsq{}orientation satisfait exactement la condition d\PYZsq{}angle speculaire par}
+\PY{c+c1}{\PYZsh{} rapport a un noeud TX/RX donne generent des hits, d\PYZsq{}ou une couverture tres inegale d\PYZsq{}un mur a l\PYZsq{}autre.}
+\PY{k}{for} \PY{n}{matname} \PY{o+ow}{in} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}brick}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}ceiling\PYZus{}board}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+    \PY{n}{scene}\PY{o}{.}\PY{n}{radio\PYZus{}materials}\PY{p}{[}\PY{n}{matname}\PY{p}{]}\PY{o}{.}\PY{n}{scattering\PYZus{}coefficient} \PY{o}{=} \PY{l+m+mf}{0.05}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Coefficients de diffusion appliques : 0.4 (acteurs dynamiques), 0.05 (facades des batiments).}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Table de correspondance objet \PYZhy{}\PYZgt{} classe semantique \PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} IMPORTANT : GROUP\PYZus{}TO\PYZus{}CLASS mappe les acteurs dynamiques sur la classe generique \PYZdq{}target\PYZdq{}, jamais}
+\PY{c+c1}{\PYZsh{} directement sur \PYZdq{}car\PYZdq{}/\PYZdq{}pedestrian\PYZdq{} \PYZhy{}\PYZhy{} un radar reel ne connait pas l\PYZsq{}identite semantique fine d\PYZsq{}un}
+\PY{c+c1}{\PYZsh{} acteur, seulement sa reponse RF. Seule la vision (Module 1b/2) peut produire les etiquettes fines,}
+\PY{c+c1}{\PYZsh{} ce qui rend Delta\PYZus{}VA (gain vision\PYZhy{}assist, Module 6) mesurable honnetement, sans fuite de verite}
+\PY{c+c1}{\PYZsh{} terrain cote radar (cf. note de tete de notebook).}
+\PY{n}{MATERIAL\PYZus{}CLASS} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}concrete}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ground}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}very\PYZus{}dry\PYZus{}ground}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ground}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}brick}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{facade}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{itu\PYZus{}ceiling\PYZus{}board}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{facade}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+\PY{p}{\PYZcb{}}
+\PY{n}{GROUP\PYZus{}TO\PYZus{}CLASS} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{car}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}
+\PY{n}{CLASSES} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ground}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{facade}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{car}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{unknown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{n}{CLASS\PYZus{}COLORS} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ground}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{saddlebrown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{facade}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{steelblue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{magenta}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{car}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{crimson}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gold}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{unknown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gray}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+\PY{p}{\PYZcb{}}
+
+\PY{n}{obj\PYZus{}to\PYZus{}group} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{obj} \PY{o+ow}{in} \PY{n}{scene}\PY{o}{.}\PY{n}{objects}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{matname} \PY{o}{=} \PY{n}{obj}\PY{o}{.}\PY{n}{radio\PYZus{}material}\PY{o}{.}\PY{n}{name}
+    \PY{k}{for} \PY{n}{g}\PY{p}{,} \PY{n}{matset} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{n}{matname} \PY{o+ow}{in} \PY{n}{matset}\PY{p}{:}
+            \PY{n}{obj\PYZus{}to\PYZus{}group}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{obj}\PY{o}{.}\PY{n}{object\PYZus{}id}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{g}
+            \PY{k}{break}
+
+\PY{n}{objid\PYZus{}to\PYZus{}class} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{obj} \PY{o+ow}{in} \PY{n}{scene}\PY{o}{.}\PY{n}{objects}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{oid} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{obj}\PY{o}{.}\PY{n}{object\PYZus{}id}\PY{p}{)}
+    \PY{n}{grp} \PY{o}{=} \PY{n}{obj\PYZus{}to\PYZus{}group}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{oid}\PY{p}{)}
+    \PY{k}{if} \PY{n}{grp} \PY{o+ow}{in} \PY{n}{GROUP\PYZus{}TO\PYZus{}CLASS}\PY{p}{:}
+        \PY{n}{objid\PYZus{}to\PYZus{}class}\PY{p}{[}\PY{n}{oid}\PY{p}{]} \PY{o}{=} \PY{n}{GROUP\PYZus{}TO\PYZus{}CLASS}\PY{p}{[}\PY{n}{grp}\PY{p}{]}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n}{objid\PYZus{}to\PYZus{}class}\PY{p}{[}\PY{n}{oid}\PY{p}{]} \PY{o}{=} \PY{n}{MATERIAL\PYZus{}CLASS}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{obj}\PY{o}{.}\PY{n}{radio\PYZus{}material}\PY{o}{.}\PY{n}{name}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{unknown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Correspondance objet \PYZhy{}\PYZgt{} classe construite pour }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{objid\PYZus{}to\PYZus{}class}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ objets}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Coefficients de diffusion appliques : 0.4 (acteurs dynamiques), 0.05 (facades
+des batiments).
+Correspondance objet -> classe construite pour 74 objets
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} 2 noeuds BS (monostatiques) + 2 noeuds capteurs dedies pietons \PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} +1.5m de clearance de mat au\PYZhy{}dessus de la surface du toit : degagement d\PYZsq{}antenne realiste (un vrai}
+\PY{c+c1}{\PYZsh{} mat sur un toit n\PYZsq{}est jamais pose a plat sur le tablier), necessaire a un calcul de trajets radio}
+\PY{c+c1}{\PYZsh{} correct depuis chaque noeud.}
+\PY{n}{TX1\PYZus{}POS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{119.55}\PY{p}{,} \PY{l+m+mf}{54.933}\PY{p}{,} \PY{l+m+mf}{20.79} \PY{o}{+} \PY{l+m+mf}{1.5}\PY{p}{]}\PY{p}{)}
+\PY{n}{TX2\PYZus{}POS} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{47.9}\PY{p}{,} \PY{l+m+mf}{110.0}\PY{p}{,} \PY{l+m+mf}{18.0} \PY{o}{+} \PY{l+m+mf}{1.5}\PY{p}{]}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Noeuds capteurs pietons : recepteur + camera, PAS une BS complete (irrealiste de deployer un reseau}
+\PY{c+c1}{\PYZsh{} d\PYZsq{}antennes complet a cote de chaque pieton ; un recepteur proche suffit a ameliorer la geometrie}
+\PY{c+c1}{\PYZsh{} bistatique, et resout separement le probleme de resolution visuelle qu\PYZsq{}aucun FOV ne peut corriger}
+\PY{c+c1}{\PYZsh{} a \PYZti{}85\PYZhy{}105m \PYZhy{}\PYZhy{} un pieton y subtend \PYZti{}0.4 degre quel que soit le cadrage).}
+\PY{n}{NODE\PYZus{}PED\PYZus{}A\PYZus{}POS} \PY{o}{=} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{6.0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{7.0}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{]}\PY{p}{)}
+\PY{n}{NODE\PYZus{}PED\PYZus{}B\PYZus{}POS} \PY{o}{=} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{6.0}\PY{p}{,} \PY{l+m+mf}{7.0}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{]}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{stale} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{+} \PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+    \PY{k}{if} \PY{n}{stale} \PY{o+ow}{in} \PY{n}{scene}\PY{o}{.}\PY{n}{transmitters} \PY{o+ow}{or} \PY{n}{stale} \PY{o+ow}{in} \PY{n}{scene}\PY{o}{.}\PY{n}{receivers}\PY{p}{:}
+        \PY{n}{scene}\PY{o}{.}\PY{n}{remove}\PY{p}{(}\PY{n}{stale}\PY{p}{)}
+
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Transmitter}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{n}{TX1\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Transmitter}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{n}{TX2\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Receiver}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{p}{(}\PY{n}{TX1\PYZus{}POS} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Receiver}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{p}{(}\PY{n}{TX2\PYZus{}POS} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Receiver}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{p}{(}\PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{car}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{1.5}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Receiver}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{n}{NODE\PYZus{}PED\PYZus{}A\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n}{scene}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Receiver}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue4}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{position}\PY{o}{=}\PY{n}{NODE\PYZus{}PED\PYZus{}B\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TX1 (bs0) @ }\PY{l+s+si}{\PYZob{}}\PY{n}{TX1\PYZus{}POS}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TX2 (bs1) @ }\PY{l+s+si}{\PYZob{}}\PY{n}{TX2\PYZus{}POS}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Noeud capteur pedestrian\PYZus{}a @ }\PY{l+s+si}{\PYZob{}}\PY{n}{NODE\PYZus{}PED\PYZus{}A\PYZus{}POS}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Noeud capteur pedestrian\PYZus{}b @ }\PY{l+s+si}{\PYZob{}}\PY{n}{NODE\PYZus{}PED\PYZus{}B\PYZus{}POS}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+TX1 (bs0) @ [-119.55   54.93   22.29]
+TX2 (bs1) @ [ 47.9 110.   19.5]
+Noeud capteur pedestrian\_a @ [-52.36  53.76   4.4 ]
+Noeud capteur pedestrian\_b @ [-57.8  113.96   4.4 ]
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{solver} \PY{o}{=} \PY{n}{PathSolver}\PY{p}{(}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Calcul des trajets (max\PYZus{}depth=}\PY{l+s+si}{\PYZob{}}\PY{n}{MAX\PYZus{}DEPTH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, diffuse\PYZus{}reflection=True)...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+\PY{n}{paths} \PY{o}{=} \PY{n}{solver}\PY{p}{(}
+    \PY{n}{scene}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{MAX\PYZus{}DEPTH}\PY{p}{,}
+    \PY{n}{los}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{specular\PYZus{}reflection}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{diffuse\PYZus{}reflection}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+    \PY{n}{refraction}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{diffraction}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{edge\PYZus{}diffraction}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+    \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{,}
+\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ray tracing termine en }\PY{l+s+si}{\PYZob{}}\PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{t0}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ s}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{vertices} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths}\PY{o}{.}\PY{n}{vertices}\PY{p}{)}
+\PY{n}{obj\PYZus{}ids} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths}\PY{o}{.}\PY{n}{objects}\PY{p}{)}
+\PY{n}{valid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths}\PY{o}{.}\PY{n}{valid}\PY{p}{)}
+\PY{n}{tau} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths}\PY{o}{.}\PY{n}{tau}\PY{p}{)}
+\PY{n}{a\PYZus{}cplx}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{paths}\PY{o}{.}\PY{n}{cir}\PY{p}{(}\PY{n}{sampling\PYZus{}frequency}\PY{o}{=}\PY{n}{BANDWIDTH\PYZus{}HZ}\PY{p}{,} \PY{n}{num\PYZus{}time\PYZus{}steps}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+                       \PY{n}{normalize\PYZus{}delays}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{out\PYZus{}type}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{numpy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{power} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{a\PYZus{}cplx}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+\PY{n}{power} \PY{o}{=} \PY{n}{power}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+
+\PY{n}{INVALID\PYZus{}ID} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{uint32}\PY{p}{(}\PY{l+m+mh}{0xFFFFFFFF}\PY{p}{)}
+\PY{n}{radar\PYZus{}points} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{D}\PY{p}{,} \PY{n}{NRX}\PY{p}{,} \PY{n}{NTX}\PY{p}{,} \PY{n}{NP}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{vertices}\PY{o}{.}\PY{n}{shape}
+\PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{D}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{rx\PYZus{}i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NRX}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{tx\PYZus{}i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NTX}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{p\PYZus{}i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NP}\PY{p}{)}\PY{p}{:}
+                \PY{n}{oid} \PY{o}{=} \PY{n}{obj\PYZus{}ids}\PY{p}{[}\PY{n}{d}\PY{p}{,} \PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]}
+                \PY{k}{if} \PY{n}{oid} \PY{o}{==} \PY{n}{INVALID\PYZus{}ID} \PY{o+ow}{or} \PY{o+ow}{not} \PY{n}{valid}\PY{p}{[}\PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]}\PY{p}{:}
+                    \PY{k}{continue}
+                \PY{n}{pos} \PY{o}{=} \PY{n}{vertices}\PY{p}{[}\PY{n}{d}\PY{p}{,} \PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]}
+                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{allclose}\PY{p}{(}\PY{n}{pos}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{continue}
+                \PY{n}{radar\PYZus{}points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{pos}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue}\PY{l+s+si}{\PYZob{}}\PY{n}{rx\PYZus{}i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs}\PY{l+s+si}{\PYZob{}}\PY{n}{tx\PYZus{}i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{depth\PYZus{}idx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{int}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{,}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{objid\PYZus{}to\PYZus{}class}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{oid}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{unknown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{delay\PYZus{}ns}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{n}{tau}\PY{p}{[}\PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]} \PY{o}{*} \PY{l+m+mf}{1e9}\PY{p}{)}\PY{p}{,}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{power\PYZus{}db}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{l+m+mi}{10} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{n}{power}\PY{p}{[}\PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]} \PY{o}{+} \PY{l+m+mf}{1e\PYZhy{}30}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                \PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nuage de points radar : }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ points d}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{interaction 3D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Repartition par classe :}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{Counter}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Calcul des trajets (max\_depth=4, diffuse\_reflection=True){\ldots}
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Ray tracing termine en 0.74 s
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Nuage de points radar : 8041 points d'interaction 3D
+Repartition par classe : Counter(\{'facade': 6598, 'ground': 1268, 'target':
+175\})
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Visualisation 3D du nuage de points radar \PYZhy{}\PYZhy{}}
+\PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{,} \PY{n}{projection}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{3d}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{pts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points}\PY{p}{]}\PY{p}{)}
+\PY{n}{classes} \PY{o}{=} \PY{p}{[}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points}\PY{p}{]}
+\PY{k}{for} \PY{n+nb+bp}{cls} \PY{o+ow}{in} \PY{n}{CLASSES}\PY{p}{:}
+    \PY{n}{mask} \PY{o}{=} \PY{p}{[}\PY{n}{c} \PY{o}{==} \PY{n+nb+bp}{cls} \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{classes}\PY{p}{]}
+    \PY{k}{if} \PY{n+nb}{any}\PY{p}{(}\PY{n}{mask}\PY{p}{)}\PY{p}{:}
+        \PY{n}{sub} \PY{o}{=} \PY{n}{pts}\PY{p}{[}\PY{n}{mask}\PY{p}{]}
+        \PY{k}{if} \PY{n+nb+bp}{cls} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Style distinct pour les points cibles (acteurs dynamiques) : avec seulement \PYZti{}5\PYZpc{} du}
+            \PY{c+c1}{\PYZsh{} nuage total, le meme style que le reste les rendrait visuellement indiscernables.}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sub}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sub}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{sub}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{*}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                       \PY{n}{color}\PY{o}{=}\PY{n}{CLASS\PYZus{}COLORS}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n+nb+bp}{cls}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{0.4}\PY{p}{,}
+                       \PY{n}{label}\PY{o}{=}\PY{n+nb+bp}{cls}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sub}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sub}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{sub}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{,}
+                       \PY{n}{color}\PY{o}{=}\PY{n}{CLASS\PYZus{}COLORS}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n+nb+bp}{cls}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n+nb+bp}{cls}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{o}{*}\PY{n}{TX1\PYZus{}POS}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZca{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TX1 (bs0)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{o}{*}\PY{n}{TX2\PYZus{}POS}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{darkred}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZca{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TX2 (bs1)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;} \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Y [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;} \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}zlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Z [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nuage de points radar ISAC (Module 1a) \PYZhy{}\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ points}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{upper left}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1a\PYZus{}radar\PYZus{}pointcloud\PYZus{}v2.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{150}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Figure sauvegardee \PYZhy{}\PYZgt{} module1a\PYZus{}radar\PYZus{}pointcloud\PYZus{}v2.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{phase3_new_scene_presentation_v2_files/phase3_new_scene_presentation_v2_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Figure sauvegardee -> module1a\_radar\_pointcloud\_v2.png
+    \end{Verbatim}
+
+    \subsection{3. Module 1b --- Acquisition Vision (4 nœuds, YOLOv8
+fine-tuné)}\label{module-1b-acquisition-vision-4-nux153uds-yolov8-fine-tunuxe9}
+
+Rendu depuis les 4 nœuds (TX1, TX2, capteur piéton A, capteur piéton B),
+chacun avec sa propre pose (position/visée/FOV).
+\texttt{show\_devices=False} : la caméra étant co-localisée avec son
+nœud de sensing, ce paramètre garantit un rendu fidèle à ce qu'une vraie
+caméra observerait, sans les icônes de visualisation des dispositifs
+radio que superpose le rendu par défaut.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{if} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mlflow}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{sys}\PY{o}{.}\PY{n}{modules}\PY{p}{:}
+    \PY{n}{sys}\PY{o}{.}\PY{n}{modules}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mlflow}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{types}\PY{o}{.}\PY{n}{ModuleType}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mlflow}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{ultralytics}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{YOLO}
+
+\PY{n}{\PYZus{}finetuned} \PY{o}{=} \PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yolo\PYZus{}finetune\PYZus{}v2}\PY{l+s+s2}{\PYZdq{}} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{weights}\PY{l+s+s2}{\PYZdq{}} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{best.pt}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{yolo\PYZus{}model} \PY{o}{=} \PY{n}{YOLO}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{\PYZus{}finetuned}\PY{p}{)}\PY{p}{)} \PY{k}{if} \PY{n}{\PYZus{}finetuned}\PY{o}{.}\PY{n}{exists}\PY{p}{(}\PY{p}{)} \PY{k}{else} \PY{n}{YOLO}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yolov8n\PYZhy{}seg.pt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Modele YOLO : }\PY{l+s+si}{\PYZob{}}\PY{n}{\PYZus{}finetuned}\PY{+w}{ }\PY{k}{if}\PY{+w}{ }\PY{n}{\PYZus{}finetuned}\PY{o}{.}\PY{n}{exists}\PY{p}{(}\PY{p}{)}\PY{+w}{ }\PY{k}{else}\PY{+w}{ }\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{repli COCO stock}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{NODES} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{TX1\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{actors\PYZus{}centroid}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{25.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{TX2\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{actors\PYZus{}centroid}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{25.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ped\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{NODE\PYZus{}PED\PYZus{}A\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{45.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ped\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{NODE\PYZus{}PED\PYZus{}B\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{45.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+\PY{p}{\PYZcb{}}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{look\PYZus{}at\PYZus{}rotation}\PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{target}\PY{p}{,} \PY{n}{up}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+    \PY{n}{cam\PYZus{}pos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+    \PY{n}{target} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{target}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+    \PY{n}{forward} \PY{o}{=} \PY{n}{target} \PY{o}{\PYZhy{}} \PY{n}{cam\PYZus{}pos}
+    \PY{n}{forward} \PY{o}{=} \PY{n}{forward} \PY{o}{/} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{forward}\PY{p}{)} \PY{o}{+} \PY{l+m+mf}{1e\PYZhy{}12}\PY{p}{)}
+    \PY{n}{right} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cross}\PY{p}{(}\PY{n}{forward}\PY{p}{,} \PY{n}{up}\PY{p}{)}
+    \PY{n}{right} \PY{o}{=} \PY{n}{right} \PY{o}{/} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{right}\PY{p}{)} \PY{o}{+} \PY{l+m+mf}{1e\PYZhy{}12}\PY{p}{)}
+    \PY{n}{true\PYZus{}up} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cross}\PY{p}{(}\PY{n}{right}\PY{p}{,} \PY{n}{forward}\PY{p}{)}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{right}\PY{p}{,} \PY{n}{true\PYZus{}up}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{forward}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{project\PYZus{}point}\PY{p}{(}\PY{n}{p\PYZus{}world}\PY{p}{,} \PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{R\PYZus{}wc}\PY{p}{,} \PY{n}{f\PYZus{}px}\PY{p}{)}\PY{p}{:}
+    \PY{n}{p\PYZus{}cam} \PY{o}{=} \PY{n}{R\PYZus{}wc} \PY{o}{@} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{p\PYZus{}world}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{cam\PYZus{}pos}\PY{p}{)}
+    \PY{k}{if} \PY{n}{p\PYZus{}cam}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{None}
+    \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{z} \PY{o}{=} \PY{n}{p\PYZus{}cam}
+    \PY{n}{u} \PY{o}{=} \PY{n}{f\PYZus{}px} \PY{o}{*} \PY{p}{(}\PY{n}{x} \PY{o}{/} \PY{o}{\PYZhy{}}\PY{n}{z}\PY{p}{)} \PY{o}{+} \PY{n}{IMG\PYZus{}W} \PY{o}{/} \PY{l+m+mi}{2}
+    \PY{n}{v} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{f\PYZus{}px} \PY{o}{*} \PY{p}{(}\PY{n}{y} \PY{o}{/} \PY{o}{\PYZhy{}}\PY{n}{z}\PY{p}{)} \PY{o}{+} \PY{n}{IMG\PYZus{}H} \PY{o}{/} \PY{l+m+mi}{2}
+    \PY{k}{if} \PY{l+m+mi}{0} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{u} \PY{o}{\PYZlt{}} \PY{n}{IMG\PYZus{}W} \PY{o+ow}{and} \PY{l+m+mi}{0} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{v} \PY{o}{\PYZlt{}} \PY{n}{IMG\PYZus{}H}\PY{p}{:}
+        \PY{k}{return} \PY{n+nb}{float}\PY{p}{(}\PY{n}{u}\PY{p}{)}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+    \PY{k}{return} \PY{k+kc}{None}
+
+\PY{n}{detections\PYZus{}by\PYZus{}node} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{n}{node\PYZus{}geometry} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{node\PYZus{}name}\PY{p}{,} \PY{n}{node} \PY{o+ow}{in} \PY{n}{NODES}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{look\PYZus{}at}\PY{p}{,} \PY{n}{fov} \PY{o}{=} \PY{n}{node}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{node}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{node}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+    \PY{n}{R\PYZus{}wc} \PY{o}{=} \PY{n}{look\PYZus{}at\PYZus{}rotation}\PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{look\PYZus{}at}\PY{p}{)}
+    \PY{n}{f\PYZus{}px} \PY{o}{=} \PY{p}{(}\PY{n}{IMG\PYZus{}W} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{tan}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{radians}\PY{p}{(}\PY{n}{fov}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{node\PYZus{}geometry}\PY{p}{[}\PY{n}{node\PYZus{}name}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{R\PYZus{}wc}\PY{p}{,} \PY{n}{f\PYZus{}px}\PY{p}{)}
+
+    \PY{n}{rgb\PYZus{}path} \PY{o}{=} \PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1b\PYZus{}camera\PYZus{}}\PY{l+s+si}{\PYZob{}}\PY{n}{node\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{.png}\PY{l+s+s2}{\PYZdq{}}
+    \PY{n}{scene}\PY{o}{.}\PY{n}{render\PYZus{}to\PYZus{}file}\PY{p}{(}\PY{n}{camera}\PY{o}{=}\PY{n}{Camera}\PY{p}{(}\PY{n}{position}\PY{o}{=}\PY{n}{cam\PYZus{}pos}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{look\PYZus{}at}\PY{o}{=}\PY{n}{look\PYZus{}at}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                          \PY{n}{filename}\PY{o}{=}\PY{n+nb}{str}\PY{p}{(}\PY{n}{rgb\PYZus{}path}\PY{p}{)}\PY{p}{,} \PY{n}{resolution}\PY{o}{=}\PY{p}{[}\PY{n}{IMG\PYZus{}W}\PY{p}{,} \PY{n}{IMG\PYZus{}H}\PY{p}{]}\PY{p}{,}
+                          \PY{n}{num\PYZus{}samples}\PY{o}{=}\PY{l+m+mi}{256}\PY{p}{,} \PY{n}{fov}\PY{o}{=}\PY{n}{fov}\PY{p}{,} \PY{n}{show\PYZus{}devices}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+    \PY{n}{res} \PY{o}{=} \PY{n}{yolo\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{source}\PY{o}{=}\PY{n+nb}{str}\PY{p}{(}\PY{n}{rgb\PYZus{}path}\PY{p}{)}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{dets} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{if} \PY{n}{res}\PY{o}{.}\PY{n}{boxes} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+        \PY{k}{for} \PY{n}{box}\PY{p}{,} \PY{n}{cls\PYZus{}id}\PY{p}{,} \PY{n}{conf} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{res}\PY{o}{.}\PY{n}{boxes}\PY{o}{.}\PY{n}{xyxy}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{numpy}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                                      \PY{n}{res}\PY{o}{.}\PY{n}{boxes}\PY{o}{.}\PY{n}{cls}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{numpy}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                                      \PY{n}{res}\PY{o}{.}\PY{n}{boxes}\PY{o}{.}\PY{n}{conf}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{numpy}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{dets}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{box}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coco\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{yolo\PYZus{}model}\PY{o}{.}\PY{n}{names}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cls\PYZus{}id}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+                         \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{n}{conf}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+    \PY{n}{detections\PYZus{}by\PYZus{}node}\PY{p}{[}\PY{n}{node\PYZus{}name}\PY{p}{]} \PY{o}{=} \PY{n}{dets}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  }\PY{l+s+si}{\PYZob{}}\PY{n}{node\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{dets}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ detections \PYZhy{}\PYZgt{} }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}
+          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{d}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coco\PYZus{}class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{(}\PY{l+s+si}{\PYZob{}}\PY{n}{d}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{confidence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{dets}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Modele YOLO :
+C:\textbackslash{}Users\textbackslash{}AdminFix\textbackslash{}Desktop\textbackslash{}PFA\textbackslash{}phase3\textbackslash{}yolo\_finetune\_v2\textbackslash{}weights\textbackslash{}best.pt
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  tx1: 1 detections -> car(0.95)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  tx2: 1 detections -> car(0.97)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  ped\_a: 2 detections -> pedestrian(0.99), car(0.92)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  ped\_b: 2 detections -> pedestrian(0.99), car(0.97)
+    \end{Verbatim}
+
+    \subsection{4. Module 2 --- Fusion sémantique
+multi-modale}\label{module-2-fusion-suxe9mantique-multi-modale}
+
+\textbf{Association par KDTree} : chaque nœud construit un
+\texttt{scipy.spatial.cKDTree} sur les centroïdes 2D de ses détections
+YOLO. Chaque point radar est projeté dans le plan image de chaque nœud
+où il est visible, puis on interroge le KDTree du nœud pour trouver la
+détection dont le centroïde est le plus proche ; le nœud retenu au final
+est celui offrant la plus faible distance parmi tous les nœuds
+candidats. Le point n'est associé que si cette distance reste sous la
+demi-diagonale de la boîte englobante de la détection retenue (évite
+d'associer un point à un centroïde proche dont la boîte ne le contient
+pas réellement). \textbf{Garde-fou de conception} : la vision n'est
+autorisée à raffiner \textbf{que} les points déjà classés
+\texttt{target} par l'ISAC --- un point qui a rebondi sur un bâtiment/le
+sol reste un bâtiment/le sol, quel que soit son alignement à l'écran
+avec une détection. Ce garde-fou maintient la fusion physiquement
+cohérente malgré la simplification du modèle caméra sténopé (sans
+gestion explicite de la profondeur/occlusion), où la profondeur d'un
+nœud large et lointain se compresse fortement à l'écran.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{build\PYZus{}node\PYZus{}kdtrees}\PY{p}{(}\PY{n}{det\PYZus{}by\PYZus{}node}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Un KDTree par noeud, construit sur les centroides 2D de ses detections YOLO.\PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{trees} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+    \PY{k}{for} \PY{n}{node\PYZus{}name}\PY{p}{,} \PY{n}{dets} \PY{o+ow}{in} \PY{n}{det\PYZus{}by\PYZus{}node}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{o+ow}{not} \PY{n}{dets}\PY{p}{:}
+            \PY{k}{continue}
+        \PY{n}{centroids} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{d}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{d}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{,}
+                                \PY{p}{(}\PY{n}{d}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{d}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{]} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{dets}\PY{p}{]}\PY{p}{)}
+        \PY{n}{trees}\PY{p}{[}\PY{n}{node\PYZus{}name}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{cKDTree}\PY{p}{(}\PY{n}{centroids}\PY{p}{)}\PY{p}{,} \PY{n}{dets}\PY{p}{)}
+    \PY{k}{return} \PY{n}{trees}
+
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{match\PYZus{}via\PYZus{}kdtree}\PY{p}{(}\PY{n}{p\PYZus{}world}\PY{p}{,} \PY{n}{node\PYZus{}geom}\PY{p}{,} \PY{n}{node\PYZus{}trees}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Associe un point radar a la detection dont le centroide 2D est le plus proche (requete}
+\PY{l+s+sd}{    KDTree), parmi tous les noeuds ou le point se projette dans le cadre \PYZhy{}\PYZhy{} retient le meilleur}
+\PY{l+s+sd}{    (plus faible distance) parmi les noeuds candidats. Rejette le match si la distance depasse la}
+\PY{l+s+sd}{    demi\PYZhy{}diagonale de la boite associee (le centroide le plus proche n\PYZsq{}implique pas forcement que}
+\PY{l+s+sd}{    le point tombe dans cette boite).\PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{best}\PY{p}{,} \PY{n}{best\PYZus{}dist}\PY{p}{,} \PY{n}{best\PYZus{}node} \PY{o}{=} \PY{k+kc}{None}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,} \PY{k+kc}{None}
+    \PY{k}{for} \PY{n}{node\PYZus{}name}\PY{p}{,} \PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{R\PYZus{}wc}\PY{p}{,} \PY{n}{f\PYZus{}px}\PY{p}{)} \PY{o+ow}{in} \PY{n}{node\PYZus{}geom}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{n}{node\PYZus{}name} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{node\PYZus{}trees}\PY{p}{:}
+            \PY{k}{continue}
+        \PY{n}{uv} \PY{o}{=} \PY{n}{project\PYZus{}point}\PY{p}{(}\PY{n}{p\PYZus{}world}\PY{p}{,} \PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{R\PYZus{}wc}\PY{p}{,} \PY{n}{f\PYZus{}px}\PY{p}{)}
+        \PY{k}{if} \PY{n}{uv} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+            \PY{k}{continue}
+        \PY{n}{tree}\PY{p}{,} \PY{n}{dets} \PY{o}{=} \PY{n}{node\PYZus{}trees}\PY{p}{[}\PY{n}{node\PYZus{}name}\PY{p}{]}
+        \PY{n}{dist}\PY{p}{,} \PY{n}{idx} \PY{o}{=} \PY{n}{tree}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{n}{uv}\PY{p}{)}
+        \PY{n}{det} \PY{o}{=} \PY{n}{dets}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+        \PY{n}{x0}\PY{p}{,} \PY{n}{y0}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{y1} \PY{o}{=} \PY{n}{det}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{n}{accept\PYZus{}radius} \PY{o}{=} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{x1} \PY{o}{\PYZhy{}} \PY{n}{x0}\PY{p}{,} \PY{n}{y1} \PY{o}{\PYZhy{}} \PY{n}{y0}\PY{p}{)}
+        \PY{k}{if} \PY{n}{dist} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{accept\PYZus{}radius} \PY{o+ow}{and} \PY{n}{dist} \PY{o}{\PYZlt{}} \PY{n}{best\PYZus{}dist}\PY{p}{:}
+            \PY{n}{best}\PY{p}{,} \PY{n}{best\PYZus{}dist}\PY{p}{,} \PY{n}{best\PYZus{}node} \PY{o}{=} \PY{n}{det}\PY{p}{,} \PY{n}{dist}\PY{p}{,} \PY{n}{node\PYZus{}name}
+    \PY{k}{return} \PY{n}{best}\PY{p}{,} \PY{n}{best\PYZus{}node}
+
+
+\PY{n}{node\PYZus{}kdtrees} \PY{o}{=} \PY{n}{build\PYZus{}node\PYZus{}kdtrees}\PY{p}{(}\PY{n}{detections\PYZus{}by\PYZus{}node}\PY{p}{)}
+
+\PY{n}{fused\PYZus{}objects} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{n\PYZus{}vision\PYZus{}matched} \PY{o}{=} \PY{l+m+mi}{0}
+\PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points}\PY{p}{:}
+    \PY{n}{matched}\PY{p}{,} \PY{n}{matched\PYZus{}node} \PY{o}{=} \PY{p}{(}\PY{k+kc}{None}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+    \PY{k}{if} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+        \PY{n}{matched}\PY{p}{,} \PY{n}{matched\PYZus{}node} \PY{o}{=} \PY{n}{match\PYZus{}via\PYZus{}kdtree}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{node\PYZus{}geometry}\PY{p}{,} \PY{n}{node\PYZus{}kdtrees}\PY{p}{)}
+
+    \PY{k}{if} \PY{n}{matched} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+        \PY{n}{cls\PYZus{}label}\PY{p}{,} \PY{n}{confidence}\PY{p}{,} \PY{n}{source} \PY{o}{=} \PY{n}{matched}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coco\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{matched}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{vision:}\PY{l+s+si}{\PYZob{}}\PY{n}{matched\PYZus{}node}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{n\PYZus{}vision\PYZus{}matched} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n}{cls\PYZus{}label}\PY{p}{,} \PY{n}{confidence}\PY{p}{,} \PY{n}{source} \PY{o}{=} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{isac\PYZus{}material}\PY{l+s+s2}{\PYZdq{}}
+
+    \PY{n}{fused\PYZus{}objects}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{cls\PYZus{}label}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{confidence}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{source}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{source}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{delay\PYZus{}ns}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{delay\PYZus{}ns}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{power\PYZus{}db}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{power\PYZus{}db}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Objets fusionnes O\PYZus{}t : }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}objects}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  dont associes a une detection vision : }\PY{l+s+si}{\PYZob{}}\PY{n}{n\PYZus{}vision\PYZus{}matched}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  dont repli sur l}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{etiquette materiau ISAC : }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}objects}\PY{p}{)}\PY{+w}{ }\PY{o}{\PYZhy{}}\PY{+w}{ }\PY{n}{n\PYZus{}vision\PYZus{}matched}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  distribution finale des classes : }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{o}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{+w}{ }\PY{k}{for}\PY{+w}{ }\PY{n}{o}\PY{+w}{ }\PY{o+ow}{in}\PY{+w}{ }\PY{n}{fused\PYZus{}objects}\PY{p}{)}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module2\PYZus{}fused\PYZus{}objects\PYZus{}v2.json}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{utf\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{fused\PYZus{}objects}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sauvegarde \PYZhy{}\PYZgt{} module2\PYZus{}fused\PYZus{}objects\PYZus{}v2.json}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Objets fusionnes O\_t : 8041
+  dont associes a une detection vision : 175
+  dont repli sur l'etiquette materiau ISAC : 7866
+  distribution finale des classes : \{'facade': 6598, 'ground': 1268, 'car': 161,
+'pedestrian': 14\}
+Sauvegarde -> module2\_fused\_objects\_v2.json
+    \end{Verbatim}
+
+    \subsection{5. Module 3 --- Semantic Digital Map Core (grille bayésienne
+2D)}\label{module-3-semantic-digital-map-core-grille-bayuxe9sienne-2d}
+
+Grille d'occupation sémantique top-down (X,Y), résolution 10 m, mise à
+jour bayésienne pour les cellules observées, facteur d'oubli \(\gamma\)
+pour les autres --- identique au mécanisme de la scène précédente.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{scene\PYZus{}bbox} \PY{o}{=} \PY{n}{scene}\PY{o}{.}\PY{n}{mi\PYZus{}scene}\PY{o}{.}\PY{n}{bbox}\PY{p}{(}\PY{p}{)}
+\PY{n}{X\PYZus{}MIN}\PY{p}{,} \PY{n}{Y\PYZus{}MIN} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{scene\PYZus{}bbox}\PY{o}{.}\PY{n}{min}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{n}{scene\PYZus{}bbox}\PY{o}{.}\PY{n}{min}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{X\PYZus{}MAX}\PY{p}{,} \PY{n}{Y\PYZus{}MAX} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{scene\PYZus{}bbox}\PY{o}{.}\PY{n}{max}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{n}{scene\PYZus{}bbox}\PY{o}{.}\PY{n}{max}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{CELL\PYZus{}SIZE} \PY{o}{=} \PY{l+m+mf}{10.0}
+\PY{n}{NX} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}MAX} \PY{o}{\PYZhy{}} \PY{n}{X\PYZus{}MIN}\PY{p}{)} \PY{o}{/} \PY{n}{CELL\PYZus{}SIZE}\PY{p}{)}\PY{p}{)}
+\PY{n}{NY} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}\PY{p}{(}\PY{n}{Y\PYZus{}MAX} \PY{o}{\PYZhy{}} \PY{n}{Y\PYZus{}MIN}\PY{p}{)} \PY{o}{/} \PY{n}{CELL\PYZus{}SIZE}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{all\PYZus{}classes} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{CLASSES}\PY{p}{)}
+\PY{k}{for} \PY{n}{det\PYZus{}list} \PY{o+ow}{in} \PY{n}{detections\PYZus{}by\PYZus{}node}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{det} \PY{o+ow}{in} \PY{n}{det\PYZus{}list}\PY{p}{:}
+        \PY{k}{if} \PY{n}{det}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coco\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{all\PYZus{}classes}\PY{p}{:}
+            \PY{n}{all\PYZus{}classes}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{det}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coco\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{C} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{all\PYZus{}classes}\PY{p}{)}
+\PY{n}{CLASS\PYZus{}IDX} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{c}\PY{p}{:} \PY{n}{i} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{c} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{all\PYZus{}classes}\PY{p}{)}\PY{p}{\PYZcb{}}
+\PY{n}{GAMMA} \PY{o}{=} \PY{l+m+mf}{0.98}
+
+\PY{n}{beta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{p}{(}\PY{n}{NY}\PY{p}{,} \PY{n}{NX}\PY{p}{,} \PY{n}{C}\PY{p}{)}\PY{p}{,} \PY{l+m+mf}{1.0} \PY{o}{/} \PY{n}{C}\PY{p}{)}
+\PY{n}{observed\PYZus{}mask} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{NY}\PY{p}{,} \PY{n}{NX}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{bool}\PY{p}{)}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{likelihood\PYZus{}vector}\PY{p}{(}\PY{n}{cls\PYZus{}name}\PY{p}{,} \PY{n}{confidence}\PY{p}{,} \PY{n}{C}\PY{p}{,} \PY{n}{class\PYZus{}idx}\PY{p}{)}\PY{p}{:}
+    \PY{n}{l} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{C}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{confidence}\PY{p}{)} \PY{o}{/} \PY{n+nb}{max}\PY{p}{(}\PY{n}{C} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+    \PY{n}{l}\PY{p}{[}\PY{n}{class\PYZus{}idx}\PY{p}{[}\PY{n}{cls\PYZus{}name}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{n}{confidence}
+    \PY{k}{return} \PY{n}{l}
+
+\PY{k}{for} \PY{n}{obj} \PY{o+ow}{in} \PY{n}{fused\PYZus{}objects}\PY{p}{:}
+    \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+    \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{X\PYZus{}MIN} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{x} \PY{o}{\PYZlt{}} \PY{n}{X\PYZus{}MAX} \PY{o+ow}{and} \PY{n}{Y\PYZus{}MIN} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{y} \PY{o}{\PYZlt{}} \PY{n}{Y\PYZus{}MAX}\PY{p}{)}\PY{p}{:}
+        \PY{k}{continue}
+    \PY{n}{ix}\PY{p}{,} \PY{n}{iy} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{X\PYZus{}MIN}\PY{p}{)} \PY{o}{/} \PY{n}{CELL\PYZus{}SIZE}\PY{p}{)}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{Y\PYZus{}MIN}\PY{p}{)} \PY{o}{/} \PY{n}{CELL\PYZus{}SIZE}\PY{p}{)}
+    \PY{n}{l\PYZus{}vec} \PY{o}{=} \PY{n}{likelihood\PYZus{}vector}\PY{p}{(}\PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{C}\PY{p}{,} \PY{n}{CLASS\PYZus{}IDX}\PY{p}{)}
+    \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{*} \PY{n}{l\PYZus{}vec}
+    \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{/} \PY{p}{(}\PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mf}{1e\PYZhy{}30}\PY{p}{)}
+    \PY{n}{observed\PYZus{}mask}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+
+\PY{n}{uniform} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{C}\PY{p}{,} \PY{l+m+mf}{1.0} \PY{o}{/} \PY{n}{C}\PY{p}{)}
+\PY{n}{beta}\PY{p}{[}\PY{o}{\PYZti{}}\PY{n}{observed\PYZus{}mask}\PY{p}{]} \PY{o}{=} \PY{n}{GAMMA} \PY{o}{*} \PY{n}{beta}\PY{p}{[}\PY{o}{\PYZti{}}\PY{n}{observed\PYZus{}mask}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{GAMMA}\PY{p}{)} \PY{o}{*} \PY{n}{uniform}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Grille semantique : }\PY{l+s+si}{\PYZob{}}\PY{n}{NY}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ x }\PY{l+s+si}{\PYZob{}}\PY{n}{NX}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ cellules (resolution }\PY{l+s+si}{\PYZob{}}\PY{n}{CELL\PYZus{}SIZE}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ m) | }\PY{l+s+si}{\PYZob{}}\PY{n}{C}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ classes : }\PY{l+s+si}{\PYZob{}}\PY{n}{all\PYZus{}classes}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Cellules observees : }\PY{l+s+si}{\PYZob{}}\PY{n}{observed\PYZus{}mask}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ / }\PY{l+s+si}{\PYZob{}}\PY{n}{observed\PYZus{}mask}\PY{o}{.}\PY{n}{size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{np}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}semantic\PYZus{}grid\PYZus{}beta\PYZus{}v2.npy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{beta}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Grille sauvegardee \PYZhy{}\PYZgt{} module3\PYZus{}semantic\PYZus{}grid\PYZus{}beta\PYZus{}v2.npy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Grille semantique : 169 x 179 cellules (resolution 10.0 m) | 6 classes :
+['ground', 'facade', 'target', 'car', 'pedestrian', 'unknown']
+Cellules observees : 391 / 30251
+Grille sauvegardee -> module3\_semantic\_grid\_beta\_v2.npy
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dominant\PYZus{}class} \PY{o}{=} \PY{n}{beta}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{cmap} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{get\PYZus{}cmap}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tab10}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{C}\PY{p}{)}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{im} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{dominant\PYZus{}class}\PY{p}{,} \PY{n}{origin}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lower}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{cmap}\PY{p}{,} \PY{n}{vmin}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{vmax}\PY{o}{=}\PY{n}{C} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.5}\PY{p}{,}
+               \PY{n}{extent}\PY{o}{=}\PY{p}{[}\PY{n}{X\PYZus{}MIN}\PY{p}{,} \PY{n}{X\PYZus{}MAX}\PY{p}{,} \PY{n}{Y\PYZus{}MIN}\PY{p}{,} \PY{n}{Y\PYZus{}MAX}\PY{p}{]}\PY{p}{)}
+\PY{n}{cbar} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{ticks}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{n}{C}\PY{p}{)}\PY{p}{)}
+\PY{n}{cbar}\PY{o}{.}\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yticklabels}\PY{p}{(}\PY{n}{all\PYZus{}classes}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{p}{[}\PY{n}{TX1\PYZus{}POS}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{TX1\PYZus{}POS}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZca{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TX1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{p}{[}\PY{n}{TX2\PYZus{}POS}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{TX2\PYZus{}POS}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{darkred}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZca{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TX2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;} \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Y [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Module 3 \PYZhy{}\PYZhy{} Carte semantique top\PYZhy{}down (classe dominante), resolution }\PY{l+s+si}{\PYZob{}}\PY{n}{CELL\PYZus{}SIZE}\PY{l+s+si}{:}\PY{l+s+s2}{.0f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ m}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{upper right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}semantic\PYZus{}map\PYZus{}v2.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{150}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Figure sauvegardee \PYZhy{}\PYZgt{} module3\PYZus{}semantic\PYZus{}map\PYZus{}v2.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{phase3_new_scene_presentation_v2_files/phase3_new_scene_presentation_v2_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Figure sauvegardee -> module3\_semantic\_map\_v2.png
+    \end{Verbatim}
+
+    \subsection{6. Modules 4 \& 5 --- Squelettes (travaux
+futurs)}\label{modules-4-5-squelettes-travaux-futurs}
+
+Ces modules dépendent de composants qui ne peuvent pas être validés dans
+cette itération (modèle JSCC entraîné, interface World Model AGI
+externe). On fixe ici les \textbf{interfaces} (signatures de fonctions)
+pour préparer leur implémentation, sans les exécuter --- identique à
+l'interface définie sur la scène précédente, indépendante de la
+géométrie de la scène.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Module 4 : JSCC \PYZhy{}\PYZhy{} Compression differentielle de la carte semantique (SQUELETTE) \PYZhy{}\PYZhy{}}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{compute\PYZus{}map\PYZus{}delta}\PY{p}{(}\PY{n}{beta\PYZus{}t}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{p}{,} \PY{n}{beta\PYZus{}t\PYZus{}minus\PYZus{}1}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}} \PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Delta\PYZus{}M\PYZus{}t = M\PYZus{}t \PYZhy{} M\PYZus{}\PYZob{}t\PYZhy{}1\PYZcb{} (Eq. 4 du plan). Implemente : simple difference.\PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{return} \PY{n}{beta\PYZus{}t} \PY{o}{\PYZhy{}} \PY{n}{beta\PYZus{}t\PYZus{}minus\PYZus{}1}
+
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{jscc\PYZus{}encode}\PY{p}{(}\PY{n}{delta\PYZus{}map}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{p}{,} \PY{n}{latent\PYZus{}dim}\PY{p}{:} \PY{n+nb}{int} \PY{o}{=} \PY{l+m+mi}{64}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}} \PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}f\PYZus{}theta(Delta\PYZus{}M\PYZus{}t) \PYZhy{}\PYZgt{} z\PYZus{}t in R\PYZca{}d, d \PYZlt{}\PYZlt{} |M\PYZus{}t|.}
+\PY{l+s+sd}{    TODO Phase 3b : remplacer par un encodeur entraine (auto\PYZhy{}encodeur / transformer)}
+\PY{l+s+sd}{    optimisant conjointement fidelite de reconstruction et robustesse au canal.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{raise} \PY{n+ne}{NotImplementedError}\PY{p}{(}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Module 4 (JSCC) : necessite un modele entraine \PYZhy{}\PYZhy{} hors perimetre de cette iteration.}\PY{l+s+s2}{\PYZdq{}}
+    \PY{p}{)}
+
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Module 5 : Interface World Model AGI (SQUELETTE) \PYZhy{}\PYZhy{}}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{semantic\PYZus{}map\PYZus{}to\PYZus{}world\PYZus{}model}\PY{p}{(}\PY{n}{h\PYZus{}map\PYZus{}vector}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Foncteur F : SemMap \PYZhy{}\PYZgt{} WorldModel\PYZus{}HD (cf. plan Module 5).}
+\PY{l+s+sd}{    TODO Phase 3b : interfacer avec le World Model / Telecom Brain (Saad et al.) :}
+\PY{l+s+sd}{      \PYZhy{} requete par similarite cosinus dans l\PYZsq{}espace HD}
+\PY{l+s+sd}{      \PYZhy{} simulation contrefactuelle sur la carte semantique}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{raise} \PY{n+ne}{NotImplementedError}\PY{p}{(}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Module 5 (World Model AGI) : necessite l}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{interface externe \PYZhy{}\PYZhy{} hors perimetre de cette iteration.}\PY{l+s+s2}{\PYZdq{}}
+    \PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Interfaces Module 4 / Module 5 definies (non executees).}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Interfaces Module 4 / Module 5 definies (non executees).
+    \end{Verbatim}
+
+    \subsection{7. Export Phase 3 → JSON (résumé +
+validation)}\label{export-phase-3-json-ruxe9sumuxe9-validation}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{summary} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{project}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SDM\PYZhy{}VA\PYZhy{}ISAC}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{phase}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{scene\PYZus{}variant}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{new\PYZus{}scene\PYZus{}dual\PYZus{}node}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{scene\PYZus{}xml}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{str}\PY{p}{(}\PY{n}{SCENE\PYZus{}XML}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frequency\PYZus{}hz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{n}{FREQUENCY\PYZus{}HZ}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bandwidth\PYZus{}hz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{n}{BANDWIDTH\PYZus{}HZ}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{max\PYZus{}depth}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{int}\PY{p}{(}\PY{n}{MAX\PYZus{}DEPTH}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx\PYZus{}positions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{TX1\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{TX2\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sensor\PYZus{}nodes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ped\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{NODE\PYZus{}PED\PYZus{}A\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ped\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{NODE\PYZus{}PED\PYZus{}B\PYZus{}POS}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1a\PYZus{}radar\PYZus{}points}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1a\PYZus{}radar\PYZus{}class\PYZus{}breakdown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1b\PYZus{}detections\PYZus{}by\PYZus{}node}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{v}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{detections\PYZus{}by\PYZus{}node}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module2\PYZus{}fused\PYZus{}objects}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}objects}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module2\PYZus{}vision\PYZus{}matched}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{n\PYZus{}vision\PYZus{}matched}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}grid\PYZus{}shape}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{n}{NY}\PY{p}{,} \PY{n}{NX}\PY{p}{,} \PY{n}{C}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}classes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{all\PYZus{}classes}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}cells\PYZus{}observed}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{int}\PY{p}{(}\PY{n}{observed\PYZus{}mask}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}cells\PYZus{}total}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{int}\PY{p}{(}\PY{n}{observed\PYZus{}mask}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{validation}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1a\PYZus{}radar\PYZus{}pointcloud\PYZus{}extracted}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1b\PYZus{}vision\PYZus{}pipeline\PYZus{}executed}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{k+kc}{True}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module2\PYZus{}fusion\PYZus{}executed}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}objects}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module2\PYZus{}vision\PYZus{}matches\PYZus{}all\PYZus{}target\PYZus{}points}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{n\PYZus{}vision\PYZus{}matched} \PY{o}{==} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}semantic\PYZus{}map\PYZus{}built}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{bool}\PY{p}{(}\PY{n}{observed\PYZus{}mask}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}
+    \PY{p}{\PYZcb{}}\PY{p}{,}
+\PY{p}{\PYZcb{}}
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{phase3\PYZus{}summary\PYZus{}v2.json}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{utf\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{summary}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Resume Phase 3 sauvegarde \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{PHASE3\PYZus{}DIR}\PY{+w}{ }\PY{o}{/}\PY{+w}{ }\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{phase3\PYZus{}summary\PYZus{}v2.json}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{=== VALIDATION PHASE 3 (nouvelle scene, dual\PYZhy{}noeud) ===}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{ok} \PY{o+ow}{in} \PY{n}{summary}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{validation}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{OK}\PY{l+s+s1}{\PYZsq{}}\PY{+w}{ }\PY{k}{if}\PY{+w}{ }\PY{n}{ok}\PY{+w}{ }\PY{k}{else}\PY{+w}{ }\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{  }\PY{l+s+si}{\PYZob{}}\PY{n}{k}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Resume Phase 3 sauvegarde ->
+C:\textbackslash{}Users\textbackslash{}AdminFix\textbackslash{}Desktop\textbackslash{}PFA\textbackslash{}phase3\textbackslash{}phase3\_summary\_v2.json
+
+=== VALIDATION PHASE 3 (nouvelle scene, dual-noeud) ===
+  OK  module1a\_radar\_pointcloud\_extracted
+  OK  module1b\_vision\_pipeline\_executed
+  OK  module2\_fusion\_executed
+  OK  module2\_vision\_matches\_all\_target\_points
+  OK  module3\_semantic\_map\_built
+    \end{Verbatim}
+
+    \subsection{8. Extension --- Simulation dynamique multi-frame (cibles
+mobiles, 4
+nœuds)}\label{extension-simulation-dynamique-multi-frame-cibles-mobiles-4-nux153uds}
+
+Anime la voiture et les deux piétons (déplacement en ligne droite,
+vitesses différentes, voiture plus rapide) vers le centroïde partagé des
+3 acteurs, et rejoue Module 1a → 1b → 2 → 3 à chaque frame.
+
+\textbf{Principe clé :} la pose de \textbf{chaque} nœud (position ET
+visée) est recalculée à chaque frame à partir de la position
+\textbf{courante} des acteurs, pour les 4 nœuds --- pas seulement au
+moment du rendu initial. Cela garantit qu'un acteur en mouvement reste
+dans le cadre de chaque nœud tout au long de la simulation. La
+projection radar→image utilisée pour la fusion du Module 2 est elle
+aussi recalculée avec la pose à jour de chaque nœud, frame par frame,
+pour rester cohérente avec le rendu réellement produit.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{N\PYZus{}EXTRA\PYZus{}FRAMES} \PY{o}{=} \PY{l+m+mi}{5}   \PY{c+c1}{\PYZsh{} frames 1..5 (frame 0 = le rendu haute qualite deja calcule plus haut)}
+\PY{n}{FRAME\PYZus{}SPEED} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{car}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{1.5}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{0.8}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{0.8}\PY{p}{\PYZcb{}}   \PY{c+c1}{\PYZsh{} m/frame}
+
+\PY{n}{actor\PYZus{}init\PYZus{}positions} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{n}{g}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{o}\PY{o}{.}\PY{n}{position}\PY{p}{)}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{o} \PY{o+ow}{in} \PY{n}{group\PYZus{}objects}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}
+\PY{p}{\PYZcb{}}
+\PY{n}{actor\PYZus{}heading} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{:}
+    \PY{n}{d} \PY{o}{=} \PY{p}{(}\PY{n}{actors\PYZus{}centroid} \PY{o}{\PYZhy{}} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}
+    \PY{n}{n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+    \PY{n}{actor\PYZus{}heading}\PY{p}{[}\PY{n}{g}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{/} \PY{n}{n}\PY{p}{,} \PY{n}{d}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{/} \PY{n}{n}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{n}{n} \PY{o}{\PYZgt{}} \PY{l+m+mf}{1e\PYZhy{}6} \PY{k}{else} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: depart }\PY{l+s+si}{\PYZob{}}\PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ \PYZhy{}\PYZgt{} cap }\PY{l+s+si}{\PYZob{}}\PY{n}{actor\PYZus{}heading}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}
+          \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  vitesse }\PY{l+s+si}{\PYZob{}}\PY{n}{FRAME\PYZus{}SPEED}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{/frame}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{set\PYZus{}actor\PYZus{}frame}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Positionne tous les acteurs dynamiques a l\PYZsq{}instant discret t (0 = position initiale).\PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{:}
+        \PY{n}{delta} \PY{o}{=} \PY{n}{actor\PYZus{}heading}\PY{p}{[}\PY{n}{g}\PY{p}{]} \PY{o}{*} \PY{n}{FRAME\PYZus{}SPEED}\PY{p}{[}\PY{n}{g}\PY{p}{]} \PY{o}{*} \PY{n}{t}
+        \PY{k}{for} \PY{n}{obj}\PY{p}{,} \PY{n}{p0} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{group\PYZus{}objects}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{,} \PY{n}{actor\PYZus{}init\PYZus{}positions}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{n}{new\PYZus{}pos} \PY{o}{=} \PY{p}{(}\PY{n}{p0} \PY{o}{+} \PY{n}{delta}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+            \PY{n}{obj}\PY{o}{.}\PY{n}{position} \PY{o}{=} \PY{n}{mi}\PY{o}{.}\PY{n}{Point3f}\PY{p}{(}\PY{o}{*}\PY{n}{new\PYZus{}pos}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+car: depart [     -34.07       92.75] -> cap [      -0.86       -0.51]  vitesse
+1.5/frame
+pedestrian\_a: depart [     -46.36       60.76] -> cap [      0.087       0.996]
+vitesse 0.8/frame
+pedestrian\_b: depart [      -51.8      106.96] -> cap [      0.358      -0.934]
+vitesse 0.8/frame
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{frames\PYZus{}dir} \PY{o}{=} \PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frames\PYZus{}v2}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{frames\PYZus{}dir}\PY{o}{.}\PY{n}{mkdir}\PY{p}{(}\PY{n}{exist\PYZus{}ok}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+
+\PY{n}{frame\PYZus{}records} \PY{o}{=} \PY{p}{[}\PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frame}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{radar\PYZus{}points}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{detections\PYZus{}by\PYZus{}node}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{v}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{detections\PYZus{}by\PYZus{}node}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fused\PYZus{}objects}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}objects}\PY{p}{)}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{vision\PYZus{}matched}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{n\PYZus{}vision\PYZus{}matched}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actor\PYZus{}xy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{n}{g}\PY{p}{:} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{\PYZcb{}}\PY{p}{,}
+\PY{p}{\PYZcb{}}\PY{p}{]}
+\PY{n}{grid\PYZus{}snapshots} \PY{o}{=} \PY{p}{[}\PY{n}{beta}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{N\PYZus{}EXTRA\PYZus{}FRAMES} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+    \PY{n}{set\PYZus{}actor\PYZus{}frame}\PY{p}{(}\PY{n}{t}\PY{p}{)}
+    \PY{n}{cur\PYZus{}centroid} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{g}\PY{p}{:} \PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{n}{g}\PY{p}{]} \PY{o}{+} \PY{n}{actor\PYZus{}heading}\PY{p}{[}\PY{n}{g}\PY{p}{]} \PY{o}{*} \PY{n}{FRAME\PYZus{}SPEED}\PY{p}{[}\PY{n}{g}\PY{p}{]} \PY{o}{*} \PY{n}{t} \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{\PYZcb{}}
+    \PY{n}{cur\PYZus{}actors\PYZus{}centroid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n}{cur\PYZus{}centroid}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Module 1a : radar (poses TX/RX inchangees \PYZhy{}\PYZhy{} ce sont des noeuds d\PYZsq{}infrastructure fixes) \PYZhy{}\PYZhy{}}
+    \PY{n}{paths\PYZus{}t} \PY{o}{=} \PY{n}{solver}\PY{p}{(}
+        \PY{n}{scene}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{MAX\PYZus{}DEPTH}\PY{p}{,}
+        \PY{n}{los}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{specular\PYZus{}reflection}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{diffuse\PYZus{}reflection}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+        \PY{n}{refraction}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{diffraction}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{edge\PYZus{}diffraction}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+        \PY{n}{seed}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{,}
+    \PY{p}{)}
+    \PY{n}{vtx\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths\PYZus{}t}\PY{o}{.}\PY{n}{vertices}\PY{p}{)}
+    \PY{n}{oid\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths\PYZus{}t}\PY{o}{.}\PY{n}{objects}\PY{p}{)}
+    \PY{n}{valid\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths\PYZus{}t}\PY{o}{.}\PY{n}{valid}\PY{p}{)}
+    \PY{n}{tau\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{paths\PYZus{}t}\PY{o}{.}\PY{n}{tau}\PY{p}{)}
+    \PY{n}{a\PYZus{}t}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{paths\PYZus{}t}\PY{o}{.}\PY{n}{cir}\PY{p}{(}\PY{n}{sampling\PYZus{}frequency}\PY{o}{=}\PY{n}{BANDWIDTH\PYZus{}HZ}\PY{p}{,} \PY{n}{num\PYZus{}time\PYZus{}steps}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+                          \PY{n}{normalize\PYZus{}delays}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{out\PYZus{}type}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{numpy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{power\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{a\PYZus{}t}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+    \PY{n}{power\PYZus{}t} \PY{o}{=} \PY{n}{power\PYZus{}t}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+
+    \PY{n}{radar\PYZus{}points\PYZus{}t} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{Dd}\PY{p}{,} \PY{n}{NRXt}\PY{p}{,} \PY{n}{NTXt}\PY{p}{,} \PY{n}{NPt}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{vtx\PYZus{}t}\PY{o}{.}\PY{n}{shape}
+    \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{Dd}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{rx\PYZus{}i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NRXt}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{tx\PYZus{}i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NTXt}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{p\PYZus{}i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NPt}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{oid} \PY{o}{=} \PY{n}{oid\PYZus{}t}\PY{p}{[}\PY{n}{d}\PY{p}{,} \PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]}
+                    \PY{k}{if} \PY{n}{oid} \PY{o}{==} \PY{n}{INVALID\PYZus{}ID} \PY{o+ow}{or} \PY{o+ow}{not} \PY{n}{valid\PYZus{}t}\PY{p}{[}\PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]}\PY{p}{:}
+                        \PY{k}{continue}
+                    \PY{n}{pos} \PY{o}{=} \PY{n}{vtx\PYZus{}t}\PY{p}{[}\PY{n}{d}\PY{p}{,} \PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]}
+                    \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{allclose}\PY{p}{(}\PY{n}{pos}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{p}{:}
+                        \PY{k}{continue}
+                    \PY{n}{radar\PYZus{}points\PYZus{}t}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+                        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{pos}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ue}\PY{l+s+si}{\PYZob{}}\PY{n}{rx\PYZus{}i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bs}\PY{l+s+si}{\PYZob{}}\PY{n}{tx\PYZus{}i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{objid\PYZus{}to\PYZus{}class}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{oid}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{unknown}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,}
+                        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{delay\PYZus{}ns}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{n}{tau\PYZus{}t}\PY{p}{[}\PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]} \PY{o}{*} \PY{l+m+mf}{1e9}\PY{p}{)}\PY{p}{,}
+                        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{power\PYZus{}db}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{l+m+mi}{10} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{n}{power\PYZus{}t}\PY{p}{[}\PY{n}{rx\PYZus{}i}\PY{p}{,} \PY{n}{tx\PYZus{}i}\PY{p}{,} \PY{n}{p\PYZus{}i}\PY{p}{]} \PY{o}{+} \PY{l+m+mf}{1e\PYZhy{}30}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                    \PY{p}{\PYZcb{}}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Module 1b : camera + YOLO, pose de CHAQUE noeud recalculee avec la position courante \PYZhy{}\PYZhy{}}
+    \PY{n}{nodes\PYZus{}t} \PY{o}{=} \PY{p}{\PYZob{}}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{TX1\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{cur\PYZus{}actors\PYZus{}centroid}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{25.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tx2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{TX2\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{cur\PYZus{}actors\PYZus{}centroid}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{25.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ped\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{NODE\PYZus{}PED\PYZus{}A\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{cur\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{45.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ped\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{NODE\PYZus{}PED\PYZus{}B\PYZus{}POS}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{cur\PYZus{}centroid}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pedestrian\PYZus{}b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{45.0}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{p}{\PYZcb{}}
+    \PY{n}{detections\PYZus{}t\PYZus{}by\PYZus{}node} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+    \PY{n}{node\PYZus{}geometry\PYZus{}t} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+    \PY{k}{for} \PY{n}{node\PYZus{}name}\PY{p}{,} \PY{n}{node} \PY{o+ow}{in} \PY{n}{nodes\PYZus{}t}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+        \PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{look\PYZus{}at}\PY{p}{,} \PY{n}{fov} \PY{o}{=} \PY{n}{node}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pos}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{node}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{look\PYZus{}at}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{node}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fov}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{n}{R\PYZus{}wc} \PY{o}{=} \PY{n}{look\PYZus{}at\PYZus{}rotation}\PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{look\PYZus{}at}\PY{p}{)}
+        \PY{n}{f\PYZus{}px} \PY{o}{=} \PY{p}{(}\PY{n}{IMG\PYZus{}W} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{tan}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{radians}\PY{p}{(}\PY{n}{fov}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{node\PYZus{}geometry\PYZus{}t}\PY{p}{[}\PY{n}{node\PYZus{}name}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{cam\PYZus{}pos}\PY{p}{,} \PY{n}{R\PYZus{}wc}\PY{p}{,} \PY{n}{f\PYZus{}px}\PY{p}{)}
+
+        \PY{n}{rgb\PYZus{}t\PYZus{}path} \PY{o}{=} \PY{n}{frames\PYZus{}dir} \PY{o}{/} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frame\PYZus{}}\PY{l+s+si}{\PYZob{}}\PY{n}{t}\PY{l+s+si}{:}\PY{l+s+s2}{02d}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZus{}}\PY{l+s+si}{\PYZob{}}\PY{n}{node\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{.png}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{scene}\PY{o}{.}\PY{n}{render\PYZus{}to\PYZus{}file}\PY{p}{(}\PY{n}{camera}\PY{o}{=}\PY{n}{Camera}\PY{p}{(}\PY{n}{position}\PY{o}{=}\PY{n}{cam\PYZus{}pos}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{look\PYZus{}at}\PY{o}{=}\PY{n}{look\PYZus{}at}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                              \PY{n}{filename}\PY{o}{=}\PY{n+nb}{str}\PY{p}{(}\PY{n}{rgb\PYZus{}t\PYZus{}path}\PY{p}{)}\PY{p}{,} \PY{n}{resolution}\PY{o}{=}\PY{p}{[}\PY{n}{IMG\PYZus{}W}\PY{p}{,} \PY{n}{IMG\PYZus{}H}\PY{p}{]}\PY{p}{,}
+                              \PY{n}{num\PYZus{}samples}\PY{o}{=}\PY{l+m+mi}{64}\PY{p}{,} \PY{n}{fov}\PY{o}{=}\PY{n}{fov}\PY{p}{,} \PY{n}{show\PYZus{}devices}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+        \PY{n}{res\PYZus{}t} \PY{o}{=} \PY{n}{yolo\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{source}\PY{o}{=}\PY{n+nb}{str}\PY{p}{(}\PY{n}{rgb\PYZus{}t\PYZus{}path}\PY{p}{)}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        \PY{n}{dets\PYZus{}t} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{if} \PY{n}{res\PYZus{}t}\PY{o}{.}\PY{n}{boxes} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+            \PY{k}{for} \PY{n}{box}\PY{p}{,} \PY{n}{cls\PYZus{}id}\PY{p}{,} \PY{n}{conf} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{res\PYZus{}t}\PY{o}{.}\PY{n}{boxes}\PY{o}{.}\PY{n}{xyxy}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{numpy}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                                          \PY{n}{res\PYZus{}t}\PY{o}{.}\PY{n}{boxes}\PY{o}{.}\PY{n}{cls}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{numpy}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                                          \PY{n}{res\PYZus{}t}\PY{o}{.}\PY{n}{boxes}\PY{o}{.}\PY{n}{conf}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{numpy}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{dets\PYZus{}t}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bbox\PYZus{}xyxy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{box}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coco\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{yolo\PYZus{}model}\PY{o}{.}\PY{n}{names}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cls\PYZus{}id}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+                               \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{float}\PY{p}{(}\PY{n}{conf}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+        \PY{n}{detections\PYZus{}t\PYZus{}by\PYZus{}node}\PY{p}{[}\PY{n}{node\PYZus{}name}\PY{p}{]} \PY{o}{=} \PY{n}{dets\PYZus{}t}
+
+    \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Module 2 : fusion par KDTree (meme garde\PYZhy{}fou \PYZdq{}target uniquement\PYZdq{} qu\PYZsq{}en Module 2 ci\PYZhy{}dessus) \PYZhy{}\PYZhy{}}
+    \PY{n}{node\PYZus{}kdtrees\PYZus{}t} \PY{o}{=} \PY{n}{build\PYZus{}node\PYZus{}kdtrees}\PY{p}{(}\PY{n}{detections\PYZus{}t\PYZus{}by\PYZus{}node}\PY{p}{)}
+    \PY{n}{fused\PYZus{}t} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{n\PYZus{}vision\PYZus{}matched\PYZus{}t} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{radar\PYZus{}points\PYZus{}t}\PY{p}{:}
+        \PY{n}{matched}\PY{p}{,} \PY{n}{\PYZus{}matched\PYZus{}node\PYZus{}t} \PY{o}{=} \PY{p}{(}\PY{k+kc}{None}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+        \PY{k}{if} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{target}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+            \PY{n}{matched}\PY{p}{,} \PY{n}{\PYZus{}matched\PYZus{}node\PYZus{}t} \PY{o}{=} \PY{n}{match\PYZus{}via\PYZus{}kdtree}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{node\PYZus{}geometry\PYZus{}t}\PY{p}{,} \PY{n}{node\PYZus{}kdtrees\PYZus{}t}\PY{p}{)}
+        \PY{k}{if} \PY{n}{matched} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+            \PY{n}{cls\PYZus{}label}\PY{p}{,} \PY{n}{confidence}\PY{p}{,} \PY{n}{source} \PY{o}{=} \PY{n}{matched}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coco\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{matched}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{vision}\PY{l+s+s2}{\PYZdq{}}
+            \PY{n}{n\PYZus{}vision\PYZus{}matched\PYZus{}t} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{cls\PYZus{}label}\PY{p}{,} \PY{n}{confidence}\PY{p}{,} \PY{n}{source} \PY{o}{=} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{material\PYZus{}class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{isac\PYZus{}material}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{fused\PYZus{}t}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{p}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{cls\PYZus{}label}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{confidence}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{source}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{source}\PY{p}{\PYZcb{}}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} Module 3 : mise a jour de la grille bayesienne (memoire temporelle via GAMMA) \PYZhy{}\PYZhy{}}
+    \PY{n}{observed\PYZus{}now} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{observed\PYZus{}mask}\PY{p}{)}
+    \PY{k}{for} \PY{n}{obj} \PY{o+ow}{in} \PY{n}{fused\PYZus{}t}\PY{p}{:}
+        \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{X\PYZus{}MIN} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{x} \PY{o}{\PYZlt{}} \PY{n}{X\PYZus{}MAX} \PY{o+ow}{and} \PY{n}{Y\PYZus{}MIN} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{y} \PY{o}{\PYZlt{}} \PY{n}{Y\PYZus{}MAX}\PY{p}{)}\PY{p}{:}
+            \PY{k}{continue}
+        \PY{k}{if} \PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{CLASS\PYZus{}IDX}\PY{p}{:}
+            \PY{k}{continue}
+        \PY{n}{ix}\PY{p}{,} \PY{n}{iy} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{X\PYZus{}MIN}\PY{p}{)} \PY{o}{/} \PY{n}{CELL\PYZus{}SIZE}\PY{p}{)}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{Y\PYZus{}MIN}\PY{p}{)} \PY{o}{/} \PY{n}{CELL\PYZus{}SIZE}\PY{p}{)}
+        \PY{n}{l\PYZus{}vec} \PY{o}{=} \PY{n}{likelihood\PYZus{}vector}\PY{p}{(}\PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{obj}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{confidence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{C}\PY{p}{,} \PY{n}{CLASS\PYZus{}IDX}\PY{p}{)}
+        \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{*} \PY{n}{l\PYZus{}vec}
+        \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{/} \PY{p}{(}\PY{n}{beta}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mf}{1e\PYZhy{}30}\PY{p}{)}
+        \PY{n}{observed\PYZus{}now}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+        \PY{n}{observed\PYZus{}mask}\PY{p}{[}\PY{n}{iy}\PY{p}{,} \PY{n}{ix}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+    \PY{n}{beta}\PY{p}{[}\PY{o}{\PYZti{}}\PY{n}{observed\PYZus{}now}\PY{p}{]} \PY{o}{=} \PY{n}{GAMMA} \PY{o}{*} \PY{n}{beta}\PY{p}{[}\PY{o}{\PYZti{}}\PY{n}{observed\PYZus{}now}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{GAMMA}\PY{p}{)} \PY{o}{*} \PY{n}{uniform}
+
+    \PY{n}{grid\PYZus{}snapshots}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{beta}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{n}{frame\PYZus{}records}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frame}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{t}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{radar\PYZus{}points}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points\PYZus{}t}\PY{p}{)}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{detections\PYZus{}by\PYZus{}node}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{v}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{detections\PYZus{}t\PYZus{}by\PYZus{}node}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fused\PYZus{}objects}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}t}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{vision\PYZus{}matched}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{n\PYZus{}vision\PYZus{}matched\PYZus{}t}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actor\PYZus{}xy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{n}{g}\PY{p}{:} \PY{n}{cur\PYZus{}centroid}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{p}{\PYZcb{}}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frame }\PY{l+s+si}{\PYZob{}}\PY{n}{t}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{radar\PYZus{}points\PYZus{}t}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ pts radar, }\PY{l+s+s2}{\PYZdq{}}
+          \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n+nb}{sum}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{v}\PY{p}{)}\PY{+w}{ }\PY{k}{for}\PY{+w}{ }\PY{n}{v}\PY{+w}{ }\PY{o+ow}{in}\PY{+w}{ }\PY{n}{detections\PYZus{}t\PYZus{}by\PYZus{}node}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ detections YOLO (tous noeuds), }\PY{l+s+s2}{\PYZdq{}}
+          \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{fused\PYZus{}t}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ objets fusionnes (}\PY{l+s+si}{\PYZob{}}\PY{n}{n\PYZus{}vision\PYZus{}matched\PYZus{}t}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ via vision)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Simulation dynamique terminee : }\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{frame\PYZus{}records}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ frames au total}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+frame 1: 7994 pts radar, 7 detections YOLO (tous noeuds), 7994 objets fusionnes
+(149 via vision)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+frame 2: 8033 pts radar, 8 detections YOLO (tous noeuds), 8033 objets fusionnes
+(176 via vision)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+frame 3: 8079 pts radar, 9 detections YOLO (tous noeuds), 8079 objets fusionnes
+(189 via vision)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+frame 4: 8099 pts radar, 10 detections YOLO (tous noeuds), 8099 objets fusionnes
+(181 via vision)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+frame 5: 8145 pts radar, 10 detections YOLO (tous noeuds), 8145 objets fusionnes
+(209 via vision)
+
+Simulation dynamique terminee : 6 frames au total
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{PIL}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{Image}
+
+\PY{n}{\PYZus{}actor\PYZus{}xy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{group\PYZus{}centroid}\PY{p}{[}\PY{n}{g}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]} \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{]}\PY{p}{)}
+\PY{n}{\PYZus{}margin} \PY{o}{=} \PY{l+m+mf}{60.0}
+\PY{n}{\PYZus{}x\PYZus{}lo}\PY{p}{,} \PY{n}{\PYZus{}y\PYZus{}lo} \PY{o}{=} \PY{n}{\PYZus{}actor\PYZus{}xy}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{\PYZus{}margin}
+\PY{n}{\PYZus{}x\PYZus{}hi}\PY{p}{,} \PY{n}{\PYZus{}y\PYZus{}hi} \PY{o}{=} \PY{n}{\PYZus{}actor\PYZus{}xy}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)} \PY{o}{+} \PY{n}{\PYZus{}margin}
+
+\PY{n}{gif\PYZus{}frames} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{snap} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{grid\PYZus{}snapshots}\PY{p}{)}\PY{p}{:}
+    \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mf}{5.5}\PY{p}{)}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{snap}\PY{p}{,} \PY{n}{origin}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lower}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{cmap}\PY{p}{,} \PY{n}{vmin}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{vmax}\PY{o}{=}\PY{n}{C} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.5}\PY{p}{,}
+              \PY{n}{extent}\PY{o}{=}\PY{p}{[}\PY{n}{X\PYZus{}MIN}\PY{p}{,} \PY{n}{X\PYZus{}MAX}\PY{p}{,} \PY{n}{Y\PYZus{}MIN}\PY{p}{,} \PY{n}{Y\PYZus{}MAX}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{ACTOR\PYZus{}MATERIALS}\PY{p}{:}
+        \PY{n}{xy} \PY{o}{=} \PY{n}{frame\PYZus{}records}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actor\PYZus{}xy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{n}{g}\PY{p}{]}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{p}{[}\PY{n}{xy}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{xy}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{60}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{n}{\PYZus{}x\PYZus{}lo}\PY{p}{,} \PY{n}{\PYZus{}x\PYZus{}hi}\PY{p}{)}\PY{p}{;} \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{n}{\PYZus{}y\PYZus{}lo}\PY{p}{,} \PY{n}{\PYZus{}y\PYZus{}hi}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{;} \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Y [m]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Carte semantique (Module 3) \PYZhy{}\PYZhy{} frame }\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{fig}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+    \PY{n}{fig}\PY{o}{.}\PY{n}{canvas}\PY{o}{.}\PY{n}{draw}\PY{p}{(}\PY{p}{)}
+    \PY{n}{buf} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asarray}\PY{p}{(}\PY{n}{fig}\PY{o}{.}\PY{n}{canvas}\PY{o}{.}\PY{n}{buffer\PYZus{}rgba}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{n}{gif\PYZus{}frames}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Image}\PY{o}{.}\PY{n}{fromarray}\PY{p}{(}\PY{n}{buf}\PY{p}{)}\PY{o}{.}\PY{n}{convert}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RGB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
+
+\PY{n}{gif\PYZus{}path} \PY{o}{=} \PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module3\PYZus{}semantic\PYZus{}map\PYZus{}animation\PYZus{}v2.gif}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{gif\PYZus{}frames}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{gif\PYZus{}path}\PY{p}{,} \PY{n}{save\PYZus{}all}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{append\PYZus{}images}\PY{o}{=}\PY{n}{gif\PYZus{}frames}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{duration}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,} \PY{n}{loop}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Animation carte semantique sauvegardee \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{gif\PYZus{}path}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{} GIF de la vue tx1 a travers les frames (frame 0 = rendu haute qualite deja genere) \PYZhy{}\PYZhy{}}
+\PY{n}{rgb\PYZus{}frames} \PY{o}{=} \PY{p}{[}\PY{n}{Image}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1b\PYZus{}camera\PYZus{}tx1.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{convert}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RGB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}
+\PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{N\PYZus{}EXTRA\PYZus{}FRAMES} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+    \PY{n}{rgb\PYZus{}frames}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Image}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{frames\PYZus{}dir} \PY{o}{/} \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frame\PYZus{}}\PY{l+s+si}{\PYZob{}}\PY{n}{t}\PY{l+s+si}{:}\PY{l+s+s2}{02d}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZus{}tx1.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{convert}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RGB}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\PY{n}{cam\PYZus{}gif\PYZus{}path} \PY{o}{=} \PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{module1b\PYZus{}camera\PYZus{}tx1\PYZus{}animation\PYZus{}v2.gif}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{rgb\PYZus{}frames}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{cam\PYZus{}gif\PYZus{}path}\PY{p}{,} \PY{n}{save\PYZus{}all}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{append\PYZus{}images}\PY{o}{=}\PY{n}{rgb\PYZus{}frames}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{duration}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,} \PY{n}{loop}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Animation camera (tx1) sauvegardee \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{cam\PYZus{}gif\PYZus{}path}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{dynamic\PYZus{}summary} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{n\PYZus{}frames}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{frame\PYZus{}records}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actor\PYZus{}speed\PYZus{}per\PYZus{}frame}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{FRAME\PYZus{}SPEED}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frames}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{frame\PYZus{}records}\PY{p}{,}
+\PY{p}{\PYZcb{}}
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{PHASE3\PYZus{}DIR} \PY{o}{/} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{phase3\PYZus{}dynamic\PYZus{}summary\PYZus{}v2.json}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{utf\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{dynamic\PYZus{}summary}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Resume dynamique sauvegarde \PYZhy{}\PYZgt{} phase3\PYZus{}dynamic\PYZus{}summary\PYZus{}v2.json}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Animation carte semantique sauvegardee ->
+C:\textbackslash{}Users\textbackslash{}AdminFix\textbackslash{}Desktop\textbackslash{}PFA\textbackslash{}phase3\textbackslash{}module3\_semantic\_map\_animation\_v2.gif
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Animation camera (tx1) sauvegardee ->
+C:\textbackslash{}Users\textbackslash{}AdminFix\textbackslash{}Desktop\textbackslash{}PFA\textbackslash{}phase3\textbackslash{}module1b\_camera\_tx1\_animation\_v2.gif
+Resume dynamique sauvegarde -> phase3\_dynamic\_summary\_v2.json
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
