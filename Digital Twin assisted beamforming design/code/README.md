@@ -19,6 +19,6 @@ Run everything from `C:\Users\AdminFix\Desktop\PFA` with `.venv\Scripts\python.e
 `dt_common.py` holds the "real" world: animated scene, UEs, 5 BSs (TX5 added), perturbed materials,
 and `dedupe_paths()`, which removes specular/diffracted paths that Sionna RT 1.2.2 stores several times
 (plane-hash rounding at 1 mm vs float32 intersection error ~100 m from the source; up to +16 dB on ~1 %
-of links). `etape2_v0_avec_doublons/` keeps the first step 2 run without this fix, for comparison.
+of links). The first step 2 run without this fix (`etape2_v0_avec_doublons/`) is kept locally only, not in the repository.
 
 Steps 3 and 4 are independent of each other. Step 2 does not need perception.

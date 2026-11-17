@@ -37,3 +37,27 @@ Semantic Digital Mapping Via Vision-Assisted ISAC- 1*re brochure - Etude Explora
 tuto.pptx
 car-scene/
 man-in-suit/
+
+# --- Nettoyage du depot : presentations, brouillons et sous-produits ---
+*.pptx
+*.ini
+rapport_global_phase2-4*
+Phase 2 notebook.pdf
+synthese_architecture_savaisac.pdf
+hj_report/rep.pdf
+hj_report/rapport - Phase 2.pdf
+phase3/phase3_new_scene.ipynb
+phase3/phase3_new_scene_kdtree.ipynb
+phase3/phase3_new_scene_presentation.ipynb
+phase3/phase3_new_scene_presentation_v2*
+phase3/phase3_new_scene_report.ipynb
+phase3/yolo_dataset_v2/
+Digital Twin assisted beamforming design/etape2_v0_avec_doublons/
+Digital Twin assisted beamforming design/*.log
+# Artefacts d'entrainement YOLO (on garde results.png, results.csv, PR et matrice normalisee)
+**/train_batch*.jpg
+**/val_batch*.jpg
+**/labels.jpg
+**/Box*_curve.png
+!**/BoxPR_curve.png
+**/confusion_matrix.png
