@@ -10,3 +10,30 @@ phase3/yolo_dataset_v2/images/
 phase3/archive_old_scene/
 phase3/frames_v2/
 *.pt
+
+# --- Ajouts : fichiers trop lourds pour GitHub (>100 Mo) ou regenerables ---
+Digital Twin assisted beamforming design/etape1/frames/
+Digital Twin assisted beamforming design/etape1/cache/
+Digital Twin assisted beamforming design/yolo_v3/dataset/
+Digital Twin assisted beamforming design/etape2/H_fr2.npy
+Digital Twin assisted beamforming design/etape2_v0_avec_doublons/H_fr2.npy
+*.blend1
+*.zip
+*.fbx
+
+# Sous-produits LaTeX
+*.aux
+*.log
+*.out
+*.toc
+
+# Documents de tiers (droits d'auteur) et ressources 3D sous licence externe
+6G project/
+AGI1.pdf
+AGI2.pdf
+AGI Native Wireless system.pdf
+Semantic-Aware_Vision-Assisted_Integrated_Sensing_and_Communication_Architecture_and_Resource_Allocation.pdf
+Semantic Digital Mapping Via Vision-Assisted ISAC- 1*re brochure - Etude Exploratoire.pdf
+tuto.pptx
+car-scene/
+man-in-suit/

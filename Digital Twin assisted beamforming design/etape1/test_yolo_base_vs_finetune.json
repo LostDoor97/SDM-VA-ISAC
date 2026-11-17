@@ -1,0 +1,90 @@
+{
+ "ped_c": {
+  "vues": 250,
+  "ft": 13,
+  "ft_conf05": 87,
+  "base": 36,
+  "base_cls": {
+   "person": 1,
+   "airplane": 25,
+   "surfboard": 5,
+   "bed": 3,
+   "suitcase": 1,
+   "clock": 1
+  },
+  "ft_cls": {
+   "car": 13
+  }
+ },
+ "ped_d": {
+  "vues": 250,
+  "ft": 11,
+  "ft_conf05": 44,
+  "base": 36,
+  "base_cls": {
+   "chair": 26,
+   "bench": 4,
+   "person": 6
+  },
+  "ft_cls": {
+   "pedestrian": 9,
+   "car": 2
+  }
+ },
+ "ped_b": {
+  "vues": 250,
+  "ft": 155,
+  "ft_conf05": 200,
+  "base": 147,
+  "base_cls": {
+   "person": 141,
+   "truck": 2,
+   "bus": 1,
+   "car": 2,
+   "bed": 4,
+   "airplane": 3
+  },
+  "ft_cls": {
+   "pedestrian": 150,
+   "car": 5
+  }
+ },
+ "bus": {
+  "vues": 239,
+  "ft": 14,
+  "ft_conf05": 95,
+  "base": 56,
+  "base_cls": {
+   "suitcase": 6,
+   "bench": 9,
+   "airplane": 17,
+   "tv": 2,
+   "truck": 2,
+   "clock": 14,
+   "bed": 8
+  },
+  "ft_cls": {
+   "car": 14
+  }
+ },
+ "ped_e": {
+  "vues": 306,
+  "ft": 165,
+  "ft_conf05": 248,
+  "base": 114,
+  "base_cls": {
+   "person": 72,
+   "car": 8,
+   "airplane": 10,
+   "truck": 9,
+   "bus": 1,
+   "bench": 5,
+   "traffic light": 4,
+   "clock": 14
+  },
+  "ft_cls": {
+   "pedestrian": 143,
+   "car": 30
+  }
+ }
+}

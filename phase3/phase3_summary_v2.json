@@ -1,11 +1,21 @@
 {
   "project": "SDM-VA-ISAC",
   "phase": 3,
-  "scene_variant": "new_scene_dual_node",
+  "scene_variant": "new_scene_4_bs_nodes",
   "scene_xml": "C:\\Users\\AdminFix\\Desktop\\PFA\\phase3\\new.xml",
-  "frequency_hz": 3500000000.0,
-  "bandwidth_hz": 20000000.0,
+  "frequency_hz": 28000000000.0,
+  "bandwidth_hz": 400000000.0,
   "max_depth": 4,
+  "detection_threshold": {
+    "tx_power_dbm": 30.0,
+    "noise_figure_db": 7.0,
+    "array_gain_db": 48.16479930623699,
+    "processing_gain_db": 51.02296466153601,
+    "snr_min_db": 13.0,
+    "noise_dbm": -80.97940008672037,
+    "path_gain_min_db": -197.16716405449338,
+    "points_below_threshold": 4112
+  },
   "tx_positions": {
     "bs0": [
       -119.55,
@@ -16,6 +26,16 @@
       47.9,
       110.0,
       19.5
+    ],
+    "bs2": [
+      43.7,
+      33.0,
+      23.3
+    ],
+    "bs3": [
+      107.0,
+      -28.6,
+      21.2
     ]
   },
   "sensor_nodes": {
@@ -30,11 +50,11 @@
       4.398263990879059
     ]
   },
-  "module1a_radar_points": 20899,
+  "module1a_radar_points": 16784,
   "module1a_radar_class_breakdown": {
-    "facade": 17427,
-    "ground": 3119,
-    "target": 353
+    "facade": 13819,
+    "ground": 2628,
+    "target": 337
   },
   "module1b_detections_by_node": {
     "tx1": 1,
@@ -44,8 +64,8 @@
     "ped_a": 2,
     "ped_b": 2
   },
-  "module2_fused_objects": 20899,
-  "module2_vision_matched": 353,
+  "module2_fused_objects": 16784,
+  "module2_vision_matched": 337,
   "module3_grid_shape": [
     169,
     179,
@@ -59,7 +79,7 @@
     "pedestrian",
     "unknown"
   ],
-  "module3_cells_observed": 594,
+  "module3_cells_observed": 579,
   "module3_cells_total": 30251,
   "validation": {
     "module1a_radar_pointcloud_extracted": true,

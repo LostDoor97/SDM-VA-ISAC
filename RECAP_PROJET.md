@@ -14,13 +14,16 @@ un World Model causal hyper-dimensionnel. Le pipeline cible comporte 6 modules :
 4. **4 — Risque sémantique + JSCC** : carte de risque, compression pour le backhaul
 5/6. **Interface AGI / World Model** : foncteur SemMap → WorldModel_HD, simulation contrefactuelle
 
-**Roadmap en 6 phases** : (1) revue de littérature, (2) scène Sionna RT calibrée, (3) pipeline de
+**Roadmap en 7 phases** : (1) revue de littérature, (2) scène Sionna RT calibrée, (3) pipeline de
 perception multimodale (YOLOv8/SegFormer + fusion KDTree + sensing Sionna), (4) grille bayésienne
-3D + encodage HD + visualisation Open3D interactive, (5) risk heatmap + JSCC + beamforming informé,
-(6) métriques quantitatives vs baselines.
+3D + encodage HD + visualisation Open3D interactive, (5) jumeau numérique ISAC double bande
+(FR1 3,5 GHz + FR2 28 GHz, mesures radar réalistes, objets créés par la vision, évaluation par
+vérité terrain), (6) risk heatmap + JSCC + complétion par diffusion + beamforming informé,
+(7) métriques quantitatives (mIoU, τ_map, Δ_VA, ρ) vs baselines.
 
-**État d'avancement (résumé pour la réunion)** : Phases 2, 3 et 4 terminées et validées. Phase 5
-pas encore commencée (prochaine étape, cf. §7).
+**État d'avancement** : Phases 2 à 5 terminées et validées (phase 5 : `phase5/phase5_jumeau_numerique.ipynb`).
+Phases 6 et 7 à venir. Note : les sections détaillées ci-dessous datent d'avant la phase 5 et du
+passage à 28 GHz ; les chiffres à jour sont dans `rapport_global_phase2-4_28GHz.tex`.
 
 ---
 

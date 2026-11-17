@@ -38,6 +38,11 @@ CUSTOM_MATERIAL_MAP = {
     "ped_B_wood": "wood",
 }
 
+# ITU material id -> ITU preset whose EM properties it should use instead
+TYPE_OVERRIDES = {
+    "mat-itu_very_dry_ground": "concrete",
+}
+
 
 def fix_export(path: Path):
     tree = ET.parse(path)
@@ -80,6 +85,21 @@ def fix_export(path: Path):
         print(f"  patched {old_id} -> {new_id} (itu_type={itu_type}), "
               f"{n_refs} reference(s) updated")
         n_fixed += 1
+
+    # EM-type overrides that keep the material's name (and so its render color and its
+    # ground/facade class mapping in the notebooks) but swap its ITU properties.
+    # itu_very_dry_ground is only defined by ITU-R P.2040 up to 10 GHz: at 28 GHz the
+    # ground uses concrete properties instead (valid 1-100 GHz).
+    for mat_id, itu_type in TYPE_OVERRIDES.items():
+        for bsdf in root.findall("./bsdf") + root.findall(".//shape/bsdf"):
+            if bsdf.attrib.get("id") != mat_id:
+                continue
+            if any(c.tag == "string" and c.attrib.get("name") == "type" for c in bsdf):
+                print(f"  (skip) {mat_id} already has a type override")
+            else:
+                bsdf.insert(0, ET.Element("string", {"name": "type", "value": itu_type}))
+                print(f"  {mat_id} -> EM properties of itu_type={itu_type}")
+                n_fixed += 1
 
     tree.write(path, encoding="utf-8", xml_declaration=True)
     print(f"\n{n_fixed} material(s) patched -> {path}")

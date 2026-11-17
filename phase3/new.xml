@@ -64,7 +64,7 @@
 		<rgb value="0.066362 0.057921 0.049411" name="reflectance" />
 	</bsdf>
 	<bsdf type="twosided" id="mat-itu_very_dry_ground" name="mat-itu_very_dry_ground">
-		<bsdf type="principled" name="bsdf">
+		<string name="type" value="concrete" /><bsdf type="principled" name="bsdf">
 			<rgb value="0.753057 0.800000 0.232713" name="base_color" />
 			<float name="spec_tint" value="0.000000" />
 			<float name="spec_trans" value="0.000000" />

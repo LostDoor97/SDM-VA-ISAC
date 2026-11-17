@@ -1,0 +1,326 @@
+{
+  "project": "SDM-VA-ISAC",
+  "phase": 5,
+  "scene_xml": "C:\\Users\\AdminFix\\Desktop\\PFA\\phase3\\new.xml",
+  "bands": {
+    "FR1": {
+      "freq_hz": 3500000000.0,
+      "bw_hz": 100000000.0,
+      "n_array": 8.0,
+      "tx_dbm": 43.0,
+      "nf_db": 5.0,
+      "g_proc_db": 45.0023647482564,
+      "g_array_db": 36.12359947967774,
+      "noise_dbm": -89.0,
+      "path_gain_min_db": -200.12596422793416,
+      "range_res_m": 1.49896229,
+      "beamwidth_rad": 0.2215,
+      "doppler_res_hz": 100.0
+    },
+    "FR2": {
+      "freq_hz": 28000000000.0,
+      "bw_hz": 400000000.0,
+      "n_array": 16.0,
+      "tx_dbm": 30.0,
+      "nf_db": 7.0,
+      "g_proc_db": 51.02296466153601,
+      "g_array_db": 48.16479930623699,
+      "noise_dbm": -80.97940008672037,
+      "path_gain_min_db": -197.16716405449338,
+      "range_res_m": 0.3747405725,
+      "beamwidth_rad": 0.11075,
+      "doppler_res_hz": 100.0
+    }
+  },
+  "cpi_s": 0.01,
+  "snr_min_db": 13.0,
+  "voxel_m": 2.0,
+  "n_frames": 6,
+  "median_point_error_m": {
+    "FR1": 2.0095513969923875,
+    "FR2": 0.4242169727823258
+  },
+  "n_tirages_bruit": 10,
+  "configurations": {
+    "C1_FR1": {
+      "structure_precision": 0.8906858008841472,
+      "structure_rappel": 0.2710967362540429,
+      "structure_f1": 0.41563818827353105,
+      "sol_precision": 0.9838803384687967,
+      "sol_rappel": 0.024839124839124836,
+      "sol_f1": 0.04845264677292104,
+      "erreur_points_mediane_m": 0.7654749678480597,
+      "part_fantomes": 0.2665538305187934,
+      "faux_objets_par_frame": 0.0,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        }
+      }
+    },
+    "C2_FR2": {
+      "structure_precision": 0.9801136374547375,
+      "structure_rappel": 0.28132061998571845,
+      "structure_f1": 0.4371376296403285,
+      "sol_precision": 0.9884296717883494,
+      "sol_rappel": 0.024971124971124973,
+      "sol_f1": 0.04870889119341386,
+      "erreur_points_mediane_m": 0.44438442932800315,
+      "part_fantomes": 0.11934557156437373,
+      "faux_objets_par_frame": 0.08333333333333333,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.5160994670016793
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.19999999999999998,
+          "erreur_moyenne_m": 0.41269329301913854
+        }
+      }
+    },
+    "C3_FR1+FR2": {
+      "structure_precision": 0.9172869217188963,
+      "structure_rappel": 0.3592052757592305,
+      "structure_f1": 0.5162126969609627,
+      "sol_precision": 0.9795200887677058,
+      "sol_rappel": 0.037913737913737915,
+      "sol_f1": 0.07299658800088657,
+      "erreur_points_mediane_m": 0.5670166612755667,
+      "part_fantomes": 0.20218399345901084,
+      "faux_objets_par_frame": 0.08333333333333333,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.5160994670016793
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.19999999999999998,
+          "erreur_moyenne_m": 0.41269329301913854
+        }
+      }
+    },
+    "C4_FR1+FR2+vision": {
+      "structure_precision": 0.9172869217188963,
+      "structure_rappel": 0.3592052757592305,
+      "structure_f1": 0.5162126969609627,
+      "sol_precision": 0.9795200887677058,
+      "sol_rappel": 0.037913737913737915,
+      "sol_f1": 0.07299658800088657,
+      "erreur_points_mediane_m": 0.5670166612755667,
+      "part_fantomes": 0.20218399345901084,
+      "faux_objets_par_frame": 0.08333333333333333,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.5160994670016793
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.7666666666666667,
+          "erreur_moyenne_m": 0.3455883803754868
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.9666666666666668,
+          "erreur_moyenne_m": 0.3871384584661667
+        }
+      }
+    }
+  },
+  "configurations_ecart_type": {
+    "C1_FR1": {
+      "structure_precision": 0.005618948191509653,
+      "structure_rappel": 0.0057330461369253715,
+      "structure_f1": 0.006729531955499618,
+      "sol_precision": 0.010086126836356887,
+      "sol_rappel": 0.0011498084771464103,
+      "sol_f1": 0.002190814967537655,
+      "erreur_points_mediane_m": 0.008199658396565144,
+      "part_fantomes": 0.0025229020903368305,
+      "faux_objets_par_frame": 0.0,
+      "car_classe": 0.0,
+      "car_erreur": null,
+      "pedestrian_a_classe": 0.0,
+      "pedestrian_a_erreur": null,
+      "pedestrian_b_classe": 0.0,
+      "pedestrian_b_erreur": null
+    },
+    "C2_FR2": {
+      "structure_precision": 0.0031620221170378707,
+      "structure_rappel": 0.0046620098235567045,
+      "structure_f1": 0.005468836084883267,
+      "sol_precision": 0.004278483631658801,
+      "sol_rappel": 0.0011901122311499988,
+      "sol_f1": 0.0022661893009329704,
+      "erreur_points_mediane_m": 0.0022442896755808495,
+      "part_fantomes": 0.0012846050257446357,
+      "faux_objets_par_frame": 0.1707825127659933,
+      "car_classe": 0.0,
+      "car_erreur": 0.058342767705841556,
+      "pedestrian_a_classe": 0.0,
+      "pedestrian_a_erreur": null,
+      "pedestrian_b_classe": 0.1632993161855452,
+      "pedestrian_b_erreur": 0.16381662264025146
+    },
+    "C3_FR1+FR2": {
+      "structure_precision": 0.0032679882224178687,
+      "structure_rappel": 0.006267571044459202,
+      "structure_f1": 0.00632006125672734,
+      "sol_precision": 0.00833475089127331,
+      "sol_rappel": 0.0015619477229916942,
+      "sol_f1": 0.002885359915604879,
+      "erreur_points_mediane_m": 0.0037141067985980636,
+      "part_fantomes": 0.00148180540357484,
+      "faux_objets_par_frame": 0.1707825127659933,
+      "car_classe": 0.0,
+      "car_erreur": 0.058342767705841556,
+      "pedestrian_a_classe": 0.0,
+      "pedestrian_a_erreur": null,
+      "pedestrian_b_classe": 0.1632993161855452,
+      "pedestrian_b_erreur": 0.16381662264025146
+    },
+    "C4_FR1+FR2+vision": {
+      "structure_precision": 0.0032679882224178687,
+      "structure_rappel": 0.006267571044459202,
+      "structure_f1": 0.00632006125672734,
+      "sol_precision": 0.00833475089127331,
+      "sol_rappel": 0.0015619477229916942,
+      "sol_f1": 0.002885359915604879,
+      "erreur_points_mediane_m": 0.0037141067985980636,
+      "part_fantomes": 0.00148180540357484,
+      "faux_objets_par_frame": 0.1707825127659933,
+      "car_classe": 0.0,
+      "car_erreur": 0.058342767705841556,
+      "pedestrian_a_classe": 0.13333333333333336,
+      "pedestrian_a_erreur": 0.08453862326429512,
+      "pedestrian_b_classe": 0.06666666666666665,
+      "pedestrian_b_erreur": 0.09931703569998393
+    }
+  },
+  "configurations_tirage_reference": {
+    "C1_FR1": {
+      "structure_precision": 0.8939130434782608,
+      "structure_rappel": 0.2737430167597765,
+      "structure_f1": 0.41913447217114186,
+      "sol_precision": 0.9875776397515528,
+      "sol_rappel": 0.024882024882024883,
+      "sol_f1": 0.04854105751288928,
+      "erreur_points_mediane_m": 0.7532475641792942,
+      "part_fantomes": 0.26450125313283207,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        }
+      },
+      "faux_objets_par_frame": 0.0
+    },
+    "C2_FR2": {
+      "structure_precision": 0.9811512990320937,
+      "structure_rappel": 0.28214390725416894,
+      "structure_f1": 0.4382599723942746,
+      "sol_precision": 0.9814814814814815,
+      "sol_rappel": 0.024849024849024848,
+      "sol_f1": 0.048470870293146194,
+      "erreur_points_mediane_m": 0.44117110802327114,
+      "part_fantomes": 0.11716107711770325,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.5187549519544001
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.3333333333333333,
+          "erreur_moyenne_m": 0.6414744512566053
+        }
+      },
+      "faux_objets_par_frame": 0.3333333333333333
+    },
+    "C3_FR1+FR2": {
+      "structure_precision": 0.9216928535225545,
+      "structure_rappel": 0.360608224471794,
+      "structure_f1": 0.5183962317757244,
+      "sol_precision": 0.972027972027972,
+      "sol_rappel": 0.03818103818103818,
+      "sol_f1": 0.07347595742658937,
+      "erreur_points_mediane_m": 0.5639323596800226,
+      "part_fantomes": 0.20009479956663057,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.5187549519544001
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.0,
+          "erreur_moyenne_m": null
+        },
+        "pedestrian_b": {
+          "classe_correcte": 0.3333333333333333,
+          "erreur_moyenne_m": 0.6414744512566053
+        }
+      },
+      "faux_objets_par_frame": 0.3333333333333333
+    },
+    "C4_FR1+FR2+vision": {
+      "structure_precision": 0.9216928535225545,
+      "structure_rappel": 0.360608224471794,
+      "structure_f1": 0.5183962317757244,
+      "sol_precision": 0.972027972027972,
+      "sol_rappel": 0.03818103818103818,
+      "sol_f1": 0.07347595742658937,
+      "erreur_points_mediane_m": 0.5639323596800226,
+      "part_fantomes": 0.20009479956663057,
+      "acteurs": {
+        "car": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.5187549519544001
+        },
+        "pedestrian_a": {
+          "classe_correcte": 0.8333333333333334,
+          "erreur_moyenne_m": 0.40111366695805656
+        },
+        "pedestrian_b": {
+          "classe_correcte": 1.0,
+          "erreur_moyenne_m": 0.4790054521656977
+        }
+      },
+      "faux_objets_par_frame": 0.3333333333333333
+    }
+  },
+  "validation": {
+    "radar_reconstruction_exact_without_noise": true,
+    "fr2_more_accurate_than_fr1": true,
+    "fr2_separates_movers_by_doppler": true,
+    "dual_band_improves_structure_f1": true,
+    "vision_objects_improve_pedestrians": true,
+    "rare_false_objects_final_config": true
+  }
+}

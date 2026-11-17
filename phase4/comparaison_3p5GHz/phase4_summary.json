@@ -1,0 +1,50 @@
+{
+  "project": "SDM-VA-ISAC",
+  "phase": 4,
+  "module3_grid3d_shape": [
+    9,
+    169,
+    179,
+    6
+  ],
+  "module3_grid3d_resolution_m": {
+    "xy": 10.0,
+    "z": 3.0
+  },
+  "module3_cells_observed": 1447,
+  "module3_cells_total": 272259,
+  "hd_encoding": {
+    "dimension": 10000,
+    "n_levels_per_axis": 64,
+    "compression_ratio": 10454.7456,
+    "query_best_match": "car",
+    "query_similarities": {
+      "ground": 0.2822,
+      "facade": 0.196,
+      "target": 0.0136,
+      "car": 0.3794,
+      "pedestrian": 0.3322,
+      "unknown": 0.0054
+    },
+    "multibs_fusion_similarity_vs_full": 0.5962,
+    "multibs_per_node_similarity": {
+      "bs0": 0.6887154165225352,
+      "bs1": 0.6680553137358816,
+      "bs2": 0.7519951399182975,
+      "bs3": 0.5164
+    },
+    "multibs_node_weights": {
+      "bs0": 0.9659165680408477,
+      "bs1": 0.9812285006046295,
+      "bs2": 0.9862156391143799,
+      "bs3": 0.3
+    },
+    "multibs_fusion_scope_note": "limitation de capacite du bundling bipolaire HDC au-dela de 2-3 noeuds, ne concerne QUE cette demo de compression backhaul -- la grille bayesienne 3D du Module 3 (le jumeau numerique) integre correctement les 4 noeuds BS + 2 capteurs pietons sans ce seuillage bipolaire intermediaire"
+  },
+  "validation": {
+    "module3_3d_grid_built": true,
+    "hd_encoding_query_retrieves_correct_class": true,
+    "hd_multibs_fusion_beats_single_node": false,
+    "open3d_render_produced": true
+  }
+}

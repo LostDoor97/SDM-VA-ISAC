@@ -1,0 +1,359 @@
+{
+ "etape": "2 - canal reel FR2 et codebook (M6)",
+ "scene": "C:\\Users\\AdminFix\\Desktop\\PFA\\Digital Twin assisted beamforming design\\scene_reelle\\real.xml",
+ "n_frames": 100,
+ "frame_s": 0.1,
+ "bande": {
+  "frequence_ghz": 28.0,
+  "largeur_mhz": 400.0,
+  "sous_porteuses": 16
+ },
+ "bs": {
+  "reseau": "UPA 16x16 tr38901, pol. V",
+  "p_tx_dbm": 30.0,
+  "bruit_dbm": -81.0,
+  "cible_secteur": [
+   -27.4,
+   51.7,
+   1.5
+  ]
+ },
+ "codebook": {
+  "type": "DFT 2D",
+  "N": 256
+ },
+ "trace": {
+  "max_depth": 4,
+  "speculaire": true,
+  "diffuse": true,
+  "diffraction": true,
+  "trajets_dupliques_supprimes": {
+   "total": 380,
+   "frames_concernees": 45,
+   "part_puissance_max_frame": 0.1236217380985339
+  }
+ },
+ "monde_reel": {
+  "acteurs": {
+   "bus": {
+    "classe": "bus",
+    "centre_initial": [
+     -107.25,
+     40.83000183105469,
+     1.7300000190734863
+    ],
+    "trajectoire_m": 113.0,
+    "vitesse_m_s": 12.0,
+    "ue": false
+   },
+   "car": {
+    "classe": "car",
+    "centre_initial": [
+     -34.06999969482422,
+     92.75,
+     1.649999976158142
+    ],
+    "trajectoire_m": 122.4,
+    "vitesse_m_s": 8.0,
+    "ue": true
+   },
+   "car2": {
+    "classe": "car",
+    "centre_initial": [
+     119.62000274658203,
+     -26.709999084472656,
+     1.3700000047683716
+    ],
+    "trajectoire_m": 258.6,
+    "vitesse_m_s": 8.0,
+    "ue": true
+   },
+   "ped_a": {
+    "classe": "pedestrian",
+    "centre_initial": [
+     -46.36000061035156,
+     60.7599983215332,
+     0.8999999761581421
+    ],
+    "trajectoire_m": 130.3,
+    "vitesse_m_s": 1.399999976158142,
+    "ue": true
+   },
+   "ped_b": {
+    "classe": "pedestrian",
+    "centre_initial": [
+     -51.79999923706055,
+     106.95999908447266,
+     0.8999999761581421
+    ],
+    "trajectoire_m": 0.0,
+    "vitesse_m_s": 0.0,
+    "ue": true
+   },
+   "ped_c": {
+    "classe": "pedestrian",
+    "centre_initial": [
+     -29.010000228881836,
+     116.31999969482422,
+     0.8999999761581421
+    ],
+    "trajectoire_m": 0.0,
+    "vitesse_m_s": 0.0,
+    "ue": true
+   },
+   "ped_d": {
+    "classe": "pedestrian",
+    "centre_initial": [
+     -49.70000076293945,
+     -23.020000457763672,
+     0.9399999976158142
+    ],
+    "trajectoire_m": 94.1,
+    "vitesse_m_s": 1.399999976158142,
+    "ue": true
+   },
+   "ped_e": {
+    "classe": "pedestrian",
+    "centre_initial": [
+     -46.59000015258789,
+     72.01000213623047,
+     0.8399999737739563
+    ],
+    "trajectoire_m": 61.5,
+    "vitesse_m_s": 1.399999976158142,
+    "ue": true
+   }
+  },
+  "mobilier": [
+   "clutter__bus_stop__1",
+   "clutter__bus_stop__2",
+   "clutter__lantern1__1",
+   "clutter__lantern1__2",
+   "clutter__lantern1__3",
+   "clutter__lantern2__1",
+   "clutter__lantern2__2",
+   "clutter__lantern3__1",
+   "clutter__lantern3__2",
+   "clutter__lantern4__1",
+   "clutter__lantern4__2",
+   "clutter__lantern5__1",
+   "clutter__lantern5__2",
+   "clutter__trashcan__1"
+  ],
+  "perturbation_materiaux": {
+   "itu_brick": {
+    "facteur_eps_r": 0.8715739254701744,
+    "facteur_sigma": 1.055965266286062
+   },
+   "itu_ceiling_board": {
+    "facteur_eps_r": 0.986907360457394,
+    "facteur_sigma": 0.9482002108432193
+   },
+   "itu_concrete": {
+    "facteur_eps_r": 0.9419669337238605,
+    "facteur_sigma": 1.116207298341306
+   },
+   "itu_very_dry_ground": {
+    "facteur_eps_r": 1.1620575346708697,
+    "facteur_sigma": 0.8709412767292195
+   }
+  }
+ },
+ "ue": [
+  "car",
+  "car2",
+  "ped_a",
+  "ped_b",
+  "ped_c",
+  "ped_d",
+  "ped_e"
+ ],
+ "part_liens_LOS": {
+  "TX1": {
+   "car": 1.0,
+   "car2": 0.14,
+   "ped_a": 0.41,
+   "ped_b": 1.0,
+   "ped_c": 1.0,
+   "ped_d": 0.55,
+   "ped_e": 1.0
+  },
+  "TX2": {
+   "car": 1.0,
+   "car2": 0.0,
+   "ped_a": 1.0,
+   "ped_b": 1.0,
+   "ped_c": 0.89,
+   "ped_d": 1.0,
+   "ped_e": 1.0
+  },
+  "TX3": {
+   "car": 1.0,
+   "car2": 0.1,
+   "ped_a": 1.0,
+   "ped_b": 0.97,
+   "ped_c": 0.87,
+   "ped_d": 1.0,
+   "ped_e": 0.0
+  },
+  "TX4": {
+   "car": 0.0,
+   "car2": 0.76,
+   "ped_a": 0.0,
+   "ped_b": 0.0,
+   "ped_c": 0.0,
+   "ped_d": 0.0,
+   "ped_e": 0.0
+  },
+  "TX5": {
+   "car": 0.48,
+   "car2": 1.0,
+   "ped_a": 0.0,
+   "ped_b": 0.0,
+   "ped_c": 0.86,
+   "ped_d": 0.79,
+   "ped_e": 0.0
+  }
+ },
+ "obstacles_liens_NLOS": {
+  "batiment/sol": 1303,
+  "acteur": 215
+ },
+ "evenements_par_ue": {
+  "car": {
+   "changements_bs_optimale": 4,
+   "changements_faisceau_optimal": 9,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 43.413333344777016,
+   "snr_oracle_min_db": 37.7748407605485,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 82,
+    "TX2": 5,
+    "TX3": 13,
+    "TX4": 0,
+    "TX5": 0
+   }
+  },
+  "car2": {
+   "changements_bs_optimale": 4,
+   "changements_faisceau_optimal": 5,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 37.871123719532875,
+   "snr_oracle_min_db": 29.919005799611,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 0,
+    "TX2": 0,
+    "TX3": 0,
+    "TX4": 13,
+    "TX5": 87
+   }
+  },
+  "ped_a": {
+   "changements_bs_optimale": 10,
+   "changements_faisceau_optimal": 0,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 41.17142050298014,
+   "snr_oracle_min_db": 38.411773133595375,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 8,
+    "TX2": 10,
+    "TX3": 82,
+    "TX4": 0,
+    "TX5": 0
+   }
+  },
+  "ped_b": {
+   "changements_bs_optimale": 0,
+   "changements_faisceau_optimal": 0,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 37.326819825489906,
+   "snr_oracle_min_db": 36.46649878056803,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 0,
+    "TX2": 100,
+    "TX3": 0,
+    "TX4": 0,
+    "TX5": 0
+   }
+  },
+  "ped_c": {
+   "changements_bs_optimale": 25,
+   "changements_faisceau_optimal": 0,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 37.20095388921061,
+   "snr_oracle_min_db": 35.03766577275553,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 11,
+    "TX2": 71,
+    "TX3": 18,
+    "TX4": 0,
+    "TX5": 0
+   }
+  },
+  "ped_d": {
+   "changements_bs_optimale": 6,
+   "changements_faisceau_optimal": 0,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 36.57646887334147,
+   "snr_oracle_min_db": 33.19203131230631,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 1,
+    "TX2": 91,
+    "TX3": 0,
+    "TX4": 0,
+    "TX5": 8
+   }
+  },
+  "ped_e": {
+   "changements_bs_optimale": 2,
+   "changements_faisceau_optimal": 1,
+   "part_frames_bs_optimale_en_LOS": 1.0,
+   "pertes_LOS_bs_servante": [],
+   "snr_oracle_median_db": 41.88548605473795,
+   "snr_oracle_min_db": 36.022742677052406,
+   "part_coupure": 0.0,
+   "bs_optimales": {
+    "TX1": 99,
+    "TX2": 1,
+    "TX3": 0,
+    "TX4": 0,
+    "TX5": 0
+   }
+  }
+ },
+ "faisceau_geometrique_J0_apercu": {
+  "perte_mediane_db_liens_LOS": 0.0,
+  "perte_mediane_db_liens_NLOS": 18.66227912902832
+ },
+ "validation": {
+  "codebook_LOS_faisceau_geometrique_a_1dB_du_meilleur": 0.9776422764227642,
+  "variabilite_diffuse": {
+   "frames": [
+    0,
+    14,
+    28,
+    42,
+    56,
+    70,
+    84,
+    99
+   ],
+   "meme_faisceau_optimal": 0.9607142857142857,
+   "ecart_gain_optimal_median_db": 0.07138792425394058,
+   "ecart_gain_optimal_p90_db": 2.2021915912628174
+  }
+ },
+ "temps_calcul_s": 381.0
+}

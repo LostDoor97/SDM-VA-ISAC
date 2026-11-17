@@ -1,0 +1,440 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+%  Compilation : xelatex (deux passes)
+% ============================================================
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\usepackage[french]{babel}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{geometry}
+\geometry{margin=2.3cm}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc}
+
+\definecolor{tabhead}{RGB}{31,78,121}
+\definecolor{tabstripe}{RGB}{242,246,250}
+\definecolor{tabchoice}{RGB}{222,238,212}
+\definecolor{cReuse}{RGB}{214,230,245}
+\definecolor{cNew}{RGB}{252,228,200}
+\definecolor{cReal}{RGB}{225,225,225}
+\definecolor{cOpt}{RGB}{235,222,245}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\raggedright\arraybackslash}p{#1}}
+\newcommand{\hd}[1]{\textcolor{white}{\textbf{#1}}}
+\newcommand{\choix}{\rowcolor{tabchoice}}
+\captionsetup{font=small, labelfont={bf,color=tabhead}, labelsep=period}
+\hypersetup{colorlinks=true, linkcolor=tabhead, urlcolor=tabhead}
+\setlist{itemsep=2pt, topsep=4pt}
+
+\newcommand{\decision}[1]{%
+  \par\smallskip\noindent\colorbox{tabchoice}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{Décision à prendre --- }#1}}\par\smallskip}
+
+\title{\textbf{Digital Twin Assisted Beamforming Design}\\[4pt]
+\large Proposition d'architecture --- suite du projet SDM-VA-ISAC}
+\author{}
+\date{27 octobre 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Point de départ : où en est le projet}
+% ============================================================
+
+Le projet SDM-VA-ISAC a livré, sur la scène \texttt{phase3/new.xml} (quartier de Rabat, voiture
+et deux piétons mobiles), une chaîne complète qui va du signal radio brut jusqu'à un jumeau
+numérique sémantique :
+
+\begin{itemize}
+  \item \textbf{Phase 2} --- environnement Sionna RT 2.0.1 calibré (scène OSM, matériaux ITU, CIR,
+        PDP, carte de couverture).
+  \item \textbf{Phase 3} --- perception multimodale : nuage de points radar (4 n\oe uds BS + 2
+        capteurs piétons), YOLOv8n fine-tuné sur les rendus (mAP50 = 0,965), fusion par
+        \textit{cKDTree}.
+  \item \textbf{Phase 4} --- grille bayésienne 3D, encodage hyperdimensionnel, visualisation
+        Open3D/Plotly.
+  \item \textbf{Phase 5} --- jumeau numérique ISAC double bande (FR1 3,5~GHz / 100~MHz, FR2
+        28~GHz / 400~MHz, réseaux $8\times8$ et $16\times16$) : mesures radar \emph{apparentes}
+        (fantômes multi-rebonds compris), filtrage par $\geq 2$ points de vue, objets créés par la
+        vision. Configuration retenue C4 (FR1+FR2+vision) : F1 structures 0,52, voiture 100~\%,
+        piéton A $77\pm13$~\%, piéton B $97\pm7$~\%, erreur de position des acteurs
+        $\approx 0{,}35$--$0{,}52$~m, 0,08 faux objet par frame.
+\end{itemize}
+
+Dans la feuille de route d'origine, la phase suivante prévoyait un \og beamforming informé \fg{}
+par la carte de risque. Le nouveau projet, \textbf{Digital Twin Assisted Beamforming Design}, en
+fait le sujet principal. Le jumeau n'est plus une fin en soi : il devient \textbf{l'outil qui
+calcule les faisceaux}.
+
+\paragraph{Question scientifique proposée.}
+\emph{Comment un jumeau numérique construit par perception ISAC et vision peut-il remplacer, en
+partie ou en totalité, l'entraînement de faisceaux (\textit{beam training}) d'une BS mmWave, et
+quelle fidélité du jumeau faut-il pour cela ?}
+
+La seconde moitié de la question est celle qui relie les deux projets. La phase 5 a déjà produit
+des jumeaux de fidélité différente (C1 FR1 seul, C2 FR2 seul, C3 double bande, C4 double bande +
+vision). On peut donc mesurer directement \textbf{ce que chaque gain de perception rapporte en
+qualité de faisceau}, une courbe que peu de travaux publient.
+
+% ============================================================
+\section{Principe général}
+% ============================================================
+
+Une BS FR2 doit orienter un faisceau étroit vers chaque utilisateur. Sans information a priori,
+elle balaie un \textit{codebook} $\mathcal{W}=\{\mathbf{w}_1,\dots,\mathbf{w}_N\}$ ($N=256$ pour
+un $16\times16$ en DFT) et garde le meilleur :
+\begin{equation}
+  \mathbf{w}^\star_t = \arg\max_{\mathbf{w}\in\mathcal{W}} \;\bigl|\mathbf{h}_t^{H}\mathbf{w}\bigr|^2 .
+\end{equation}
+Ce balayage coûte $N$ créneaux de référence (SSB/CSI-RS) et doit être refait dès que
+l'utilisateur bouge ou qu'un obstacle coupe le trajet direct.
+
+Le jumeau numérique sert de \textbf{simulateur de canal spécifique au site} :
+\begin{enumerate}
+  \item il connaît la géométrie statique, les objets mobiles (position, vitesse, classe) et la
+        position des UE ;
+  \item on reconstruit à partir de lui une \og scène jumelle \fg{} Sionna ;
+  \item le ray tracing sur cette scène donne un canal prédit $\hat{\mathbf{h}}_t$, donc un
+        classement des faisceaux \emph{avant} toute mesure ;
+  \item la BS ne mesure plus que les $K \ll N$ meilleurs candidats.
+\end{enumerate}
+\begin{equation}
+  \mathcal{S}_K = \operatorname{top-}K_{\mathbf{w}\in\mathcal{W}}\;
+      \bigl|\hat{\mathbf{h}}_t^{H}\mathbf{w}\bigr|^2,
+  \qquad
+  \hat{\mathbf{w}}_t = \arg\max_{\mathbf{w}\in\mathcal{S}_K} \bigl|\mathbf{h}_t^{H}\mathbf{w}\bigr|^2 .
+\end{equation}
+Le compromis se lit sur le débit effectif, qui tient compte du temps perdu en entraînement :
+\begin{equation}
+  R_{\text{eff}} = \Bigl(1-\frac{K\,T_{\text{beam}}}{T_{\text{frame}}}\Bigr)
+                   \log_2\!\Bigl(1+\frac{P\,|\mathbf{h}_t^{H}\hat{\mathbf{w}}_t|^2}{\sigma^2}\Bigr).
+\end{equation}
+Un jumeau parfait donne $K=1$ sans perte ; un jumeau faux oblige à augmenter $K$. Tout l'intérêt
+est de quantifier la zone intermédiaire.
+
+% ============================================================
+\section{Architecture proposée}
+% ============================================================
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw=tabhead, thick, rounded corners=3pt, align=center,
+              minimum height=1.25cm, text width=3.3cm, inner sep=4pt},
+  reuse/.style={box, fill=cReuse},
+  new/.style={box, fill=cNew},
+  real/.style={box, fill=cReal},
+  opt/.style={box, fill=cOpt, dashed},
+  arr/.style={-{Stealth[length=2.4mm]}, thick, tabhead},
+  darr/.style={-{Stealth[length=2.4mm]}, thick, violet!70!black, dashed},
+  lab/.style={font=\scriptsize, fill=white, inner sep=1.5pt},
+  node distance=1.2cm and 1.3cm]
+
+  % Bande 1 : jumeau numérique
+  \node[reuse] (dt) {\textbf{M1 --- État du jumeau}\\ phase 5 (C1--C4)\\ carte statique + $\mathcal{O}_t$};
+  \node[new, right=of dt] (synth) {\textbf{M2 --- Scène jumelle}\\ bâtiments + gabarits\\ d'objets à $t+\Delta$};
+  \node[new, right=of synth] (pred) {\textbf{M3 --- Prédicteur}\\ canal $\hat{\mathbf{h}}_{t+\Delta}$, gain\\ de chaque faisceau};
+
+  % Bande 2 : beamforming
+  \node[new, below=of dt] (track) {\textbf{M4 --- Prédiction}\\ trajectoires (Kalman)};
+  \node[opt, below=of synth] (calib) {\textbf{M7 --- Calibration}\\ jumeau $\leftrightarrow$ réalité\\ (RT différentiable)};
+  \node[new, below=of pred] (bf) {\textbf{M5 --- Conception}\\ choix de la BS\\ et du top-$K$ $\mathcal{S}_K$};
+
+  % Bande 3 : réalité simulée
+  \node[real, below=of track] (world) {\textbf{Monde \og réel \fg{}}\\ scène Sionna complète\\ (vérité terrain)};
+  \node[real, below=of calib] (realch) {\textbf{Canal réel} $\mathbf{h}_t$\\ RT sur la scène vraie};
+  \node[real, below=of bf] (sweep) {\textbf{M6 --- Mesure}\\ balayage réduit\\ sur $\mathcal{S}_K$ $\to$ $\hat{\mathbf{w}}_t$};
+
+  % Flux principal
+  \draw[arr] (world.west) -- ++(-0.75,0) |- node[lab, pos=0.25, rotate=90]{capteurs ISAC + caméras} (dt.west);
+  \draw[arr] (dt) -- (synth);
+  \draw[arr] (synth) -- (pred);
+  \draw[arr] (dt) -- (track);
+  \draw[arr] (track.north east) -- node[lab]{$\hat{\mathbf{p}}_{t+\Delta}$} (synth.south west);
+  \draw[arr] (pred) -- node[lab]{gains prédits} (bf);
+  \draw[arr] (bf) -- node[lab]{$\mathcal{S}_K$} (sweep);
+  \draw[arr] (world) -- (realch);
+  \draw[arr] (realch) -- (sweep);
+
+  % Boucle optionnelle
+  \draw[darr] (sweep.north west) -- node[lab]{écart} (calib.south east);
+  \draw[darr] (calib) -- node[lab]{matériaux} (synth);
+
+  \begin{scope}[on background layer]
+    \node[fit=(dt)(pred), draw=tabhead!60, rounded corners=6pt, inner sep=6pt, fill=cReuse!25,
+          label={[font=\scriptsize\bfseries, tabhead, anchor=west, align=left]east:Jumeau\\numérique}] {};
+    \node[fit=(track)(bf), draw=orange!70!black, rounded corners=6pt, inner sep=6pt, fill=cNew!25,
+          label={[font=\scriptsize\bfseries, orange!70!black, anchor=west, align=left]east:Beam-\\forming}] {};
+    \node[fit=(world)(sweep), draw=gray, rounded corners=6pt, inner sep=6pt, fill=gray!6,
+          label={[font=\scriptsize\bfseries, gray, anchor=west, align=left]east:Réalité\\simulée}] {};
+  \end{scope}
+\end{tikzpicture}
+\caption{Architecture proposée. Bleu : réutilisé des phases 3--5. Orange : nouveau. Violet en
+pointillés : boucle optionnelle de calibration, alimentée par l'écart entre gains prédits et
+mesurés. Gris : la \og réalité \fg{}, simulée par une scène Sionna distincte
+de la scène jumelle.}
+\label{fig:archi}
+\end{figure}
+
+\subsection{Séparer la réalité du jumeau}
+
+C'est le point méthodologique le plus important. Tout est simulé avec Sionna, donc si la scène
+jumelle était identique à la scène \og réelle \fg{}, le jumeau serait parfait par construction et
+les résultats n'auraient aucune valeur. On maintient donc \textbf{deux scènes distinctes} :
+
+\begin{itemize}
+  \item \textbf{Scène réelle} : \texttt{new.xml} complète, acteurs à leur vraie position, diffusion
+        diffuse activée, matériaux éventuellement perturbés (écart sur $\varepsilon_r$ et
+        $\sigma$ autour des valeurs ITU), petits objets absents du jumeau (lampadaires, mobilier).
+  \item \textbf{Scène jumelle} : construite \emph{uniquement} à partir de ce que le jumeau sait
+        (sortie de la phase 5) --- positions estimées avec leur erreur, classes reconnues,
+        objets manqués absents, faux objets présents.
+\end{itemize}
+L'écart entre les deux (\textit{twin-reality gap}) est la variable que l'on fait varier.
+
+\subsection{Rôle de chaque module}
+
+\begin{table}[H]
+\centering
+\caption{Modules de l'architecture.}
+\label{tab:modules}
+\rowcolors{2}{white}{tabstripe}
+\begin{tabularx}{\linewidth}{B{2.6cm} L P{2.2cm}}
+\rowcolor{tabhead}
+\hd{Module} & \hd{Rôle} & \hd{Origine} \\
+M1 État du jumeau & Carte statique (voxels/classe), objets $\mathcal{O}_t=\{(\mathbf{p}_i,\mathbf{v}_i,c_i,\boldsymbol{\Sigma}_i)\}$, positions UE estimées. Plusieurs niveaux de fidélité (C1--C4). & Phase 5, inchangé \\
+M2 Scène jumelle & Transforme l'état en scène Sionna : bâtiments (maillage OSM ou voxels) + gabarit par classe (boîte $4{,}5\times1{,}8\times1{,}5$~m pour une voiture, cylindre pour un piéton) placé à la position estimée, matériau ITU selon la classe. & Nouveau \\
+M3 Prédicteur de canal & Ray tracing sur la scène jumelle $\to$ $\hat{\mathbf{h}}$ par couple BS--UE, puis gain prédit de chaque faisceau du codebook. & Nouveau \\
+M4 Prédiction & Filtre de Kalman sur les trajectoires (vitesse déjà estimée en FR2 par Doppler) $\to$ positions à $t+\Delta$, qui permettent de repérer un blocage du trajet direct avant qu'il ne se produise. & Nouveau \\
+M5 Conception des faisceaux & Choix de la BS (4 disponibles) et du sous-ensemble $\mathcal{S}_K$ ; commutation anticipée avant un blocage. & Nouveau \\
+M6 Mesure & Canal vrai sur la scène réelle, balayage limité à $\mathcal{S}_K$, calcul de la perte et du débit effectif. & Nouveau \\
+M7 Calibration & Ajuste les matériaux (et décalages de position) de la scène jumelle par gradient, en comparant puissances prédites et mesurées (Sionna RT est différentiable). & Optionnel \\
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{Choix d'architecture}
+% ============================================================
+
+Quatre décisions structurent le projet. Pour chacune, je donne les options et ma recommandation ;
+c'est à toi de trancher.
+
+\subsection{D1 --- Paradigme de beamforming (décision principale)}
+
+\begin{table}[H]
+\centering
+\caption{Trois paradigmes possibles. La ligne verte est la recommandation.}
+\label{tab:d1}
+\rowcolors{2}{white}{tabstripe}
+\begin{tabularx}{\linewidth}{B{3.0cm} L L P{1.5cm}}
+\rowcolor{tabhead}
+\hd{Option} & \hd{Principe} & \hd{Intérêt / risque} & \hd{Charge} \\
+\choix A. Sélection de faisceau assistée par jumeau (+ prédictive) &
+Codebook analogique DFT, un faisceau par UE et par BS. Le jumeau classe les faisceaux, la BS ne
+mesure que le top-$K$. Extension : prédiction à $t+\Delta$ et commutation de BS avant blocage. &
+Continuité directe avec la phase 5 (positions + objets), métriques standard et lisibles, résultat
+garanti. Moins \og algorithmique \fg{} que B ou C. & Moyenne \\
+B. Précodage hybride multi-utilisateur &
+Le jumeau donne $\hat{\mathbf{H}}$ complet ; étage analogique par sélection (A), étage numérique
+ZF/MMSE/WMMSE sur le canal effectif, plusieurs UE servis simultanément. &
+Plus proche d'une vraie conception de précodeur ; sensible à la phase du canal prédit, que le
+jumeau estime mal (erreur de 0,4~m $\gg \lambda = 1{,}07$~cm). & Élevée \\
+C. Beam management appris (DRL) dans le jumeau &
+Un agent apprend la politique (BS, faisceau, moment du balayage) avec un état enrichi par la
+carte sémantique $\boldsymbol{\xi}_t^{\text{SDM}}$ ; entraînement dans le jumeau, test sur la
+réalité. &
+Lien fort avec le \textit{Telecom Brain} et la feuille de route d'origine. Demande beaucoup de
+trajectoires, donc beaucoup de ray tracing ; risque de ne pas converger dans les délais. & Très
+élevée \\
+\end{tabularx}
+\end{table}
+
+\paragraph{Recommandation : A comme c\oe ur, B en extension.}
+L'argument décisif est physique. À 28~GHz, une erreur de position de 0,4~m vaut environ 37
+longueurs d'onde : le jumeau ne peut pas prédire la \emph{phase} du canal, seulement sa
+\emph{structure} (directions des trajets, puissances, blocages). La sélection de faisceau n'a
+besoin que de cette structure ; le précodage numérique (B) a besoin de la phase et devra de toute
+façon s'appuyer sur une mesure. B s'ajoute donc naturellement \emph{par-dessus} A : le jumeau
+choisit les faisceaux analogiques, une mesure courte du canal effectif sert au précodeur
+numérique. C reste possible en fin de projet si le temps le permet, en réutilisant M1--M6 comme
+environnement d'entraînement.
+
+\decision{A seul, A puis B, ou C ?}
+
+\subsection{D2 --- Construction de la scène jumelle}
+
+\begin{itemize}
+  \item \textbf{D2-a. Carte statique connue + objets perçus} \emph{(recommandé)}. Les bâtiments
+        viennent du modèle 3D (OSM, comme le ferait un opérateur), seuls les objets mobiles
+        viennent de la perception. Réaliste : un opérateur dispose d'un modèle de ville, ce qu'il
+        ne connaît pas, ce sont les voitures et les piétons.
+  \item \textbf{D2-b. Tout depuis la perception}. Les bâtiments sont reconstruits à partir des
+        voxels de la phase 5 (marching cubes ou boîtes par voxel). Plus pur scientifiquement, mais
+        le rappel structures de 0,36 donnerait des façades trouées et des trajets réfléchis
+        absents, ce qui pénaliserait surtout la reconstruction et non le beamforming.
+\end{itemize}
+On peut faire D2-a comme référence et D2-b comme expérience complémentaire, ce qui ajoute un
+niveau à l'échelle de fidélité ci-dessous.
+
+\decision{D2-a seul, ou D2-a + D2-b ?}
+
+\subsection{D3 --- Calcul du canal prédit}
+
+\begin{itemize}
+  \item \textbf{D3-a. Ray tracing en ligne à chaque frame} : exact, mais un appel
+        \texttt{PathSolver} par frame et par BS.
+  \item \textbf{D3-b. Carte de canal précalculée + correction de blocage} \emph{(recommandé)} :
+        on précalcule une fois sur la scène statique une carte de connaissance du canal
+        (\textit{channel knowledge map}) sur une grille de positions UE (meilleur faisceau et gain
+        par faisceau, par BS) ; en ligne, on ne fait qu'un test de visibilité contre les gabarits
+        des objets mobiles et on retire les trajets bloqués. Rapide, et c'est l'architecture
+        qu'un opérateur déploierait réellement.
+\end{itemize}
+D3-a sert de référence pour mesurer ce que l'approximation D3-b coûte en précision.
+
+\decision{D3-b avec D3-a comme référence, ou D3-a uniquement ?}
+
+\subsection{D4 --- Bandes de fréquence}
+
+Recommandation : \textbf{jumeau construit en FR1+FR2+vision (C4), beamforming en FR2}. C'est en
+FR2 que le beamforming est critique (faisceaux étroits, blocage par un piéton) et que
+l'entraînement coûte cher ($N=256$). FR1 continue de servir au sensing, comme en phase 5.
+Alternative : beamforming aussi en FR1 ($8\times8$, $N=64$) pour montrer que le bénéfice du jumeau
+croît avec la fréquence.
+
+\decision{FR2 seul, ou FR1 et FR2 en comparaison ?}
+
+% ============================================================
+\section{Scénario de simulation}
+% ============================================================
+
+\begin{itemize}
+  \item \textbf{Scène} : \texttt{phase3/new.xml} (déjà validée, matériaux corrigés pour 28~GHz).
+  \item \textbf{BS} : les 4 n\oe uds TX1--TX4 existants, réseau UPA $16\times16$ à 28~GHz,
+        codebook DFT $N=256$ (éventuellement suréchantillonné).
+  \item \textbf{UE} : le piéton A, le piéton B et la voiture portent chacun un UE (les acteurs sont
+        à la fois utilisateurs et obstacles), plus 2--4 UE piétons supplémentaires sur les
+        trottoirs pour multiplier les situations de blocage.
+  \item \textbf{Séquence} : la phase 5 n'a que 6 frames. Il faut une trajectoire plus longue, par
+        exemple 10~s à 10~frames/s (100 frames), pour que la prédiction et les blocages aient un
+        sens. C'est le principal coût de calcul nouveau.
+  \item \textbf{Jumeaux évalués} : on fait varier la fidélité selon l'échelle suivante.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Échelle de fidélité du jumeau : la variable principale des expériences.}
+\label{tab:fidelite}
+\rowcolors{2}{white}{tabstripe}
+\begin{tabularx}{\linewidth}{B{1.2cm} P{4.4cm} L}
+\rowcolor{tabhead}
+\hd{Niveau} & \hd{Contenu de la scène jumelle} & \hd{Ce qu'il mesure} \\
+J0 & Aucune scène : faisceau géométrique vers la position estimée de l'UE (ligne de vue supposée) & Ce que donne la seule localisation, sans jumeau \\
+J1 & Bâtiments seuls (OSM) & Apport des réflexions sur les façades \\
+J2 & J1 + objets perçus, configurations C1 à C4 de la phase 5 & \textbf{Apport de chaque gain de perception sur le faisceau} \\
+J3 & J2 (C4) + matériaux calibrés (M7) & Apport de la boucle de calibration \\
+J$\infty$ & Scène réelle exacte (oracle) & Borne supérieure atteignable par un jumeau \\
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{Évaluation}
+% ============================================================
+
+\subsection{Références de comparaison}
+\begin{itemize}
+  \item \textbf{Balayage exhaustif} des $N$ faisceaux : performance optimale, coût maximal.
+  \item \textbf{Recherche hiérarchique} (faisceaux larges puis fins, $\approx 2\log_2 N$ mesures) :
+        référence standard 5G NR.
+  \item \textbf{J0, faisceau par localisation seule} : montre ce que la carte apporte au-delà de
+        la position.
+  \item \textbf{Suivi réactif} : on ne rebalaie qu'après une chute de puissance (pas d'anticipation
+        des blocages).
+\end{itemize}
+
+\subsection{Métriques}
+\begin{table}[H]
+\centering
+\caption{Métriques proposées.}
+\label{tab:metriques}
+\rowcolors{2}{white}{tabstripe}
+\begin{tabularx}{\linewidth}{B{4.2cm} L}
+\rowcolor{tabhead}
+\hd{Métrique} & \hd{Définition} \\
+Précision top-$K$ & Fraction des frames où le meilleur faisceau réel appartient à $\mathcal{S}_K$ \\
+Perte de SNR & $10\log_{10}\bigl(|\mathbf{h}^H\mathbf{w}^\star|^2 / |\mathbf{h}^H\hat{\mathbf{w}}|^2\bigr)$, médiane et 90\textsuperscript{e} centile \\
+Surcoût d'entraînement & $K/N$, ou $K$ nécessaire pour une perte $< 1$~dB dans 90~\% des cas \\
+Débit effectif & $R_{\text{eff}}$ (équation~3), moyenné sur la séquence \\
+Coupures & Nombre et durée des frames sous un seuil de SNR, surtout lors des blocages \\
+Anticipation & Délai entre la commutation décidée par le jumeau et le blocage réel \\
+Coût de calcul & Temps par frame de M2--M5 sur la RTX 4070, comparé à la durée d'une frame \\
+\end{tabularx}
+\end{table}
+
+\paragraph{Résultat attendu principal.} Une courbe \og fidélité du jumeau $\to$ surcoût
+d'entraînement \fg{} : pour chaque niveau J0 à J$\infty$, le $K$ minimal qui garantit une perte de
+SNR inférieure à 1~dB. Elle relie directement les résultats de la phase 5 (F1, erreur de position,
+taux de reconnaissance des piétons) au gain système, ce qui donne au jumeau une valeur mesurable
+en termes de réseau.
+
+% ============================================================
+\section{Plan de travail proposé}
+% ============================================================
+
+\begin{table}[H]
+\centering
+\caption{Étapes, dans l'ordre de dépendance.}
+\label{tab:plan}
+\rowcolors{2}{white}{tabstripe}
+\begin{tabularx}{\linewidth}{B{0.6cm} P{4.2cm} L}
+\rowcolor{tabhead}
+\hd{\#} & \hd{Étape} & \hd{Livrable} \\
+1 & Séquence longue + UE & Trajectoires des acteurs et UE sur 100 frames, sortie du jumeau phase 5 pour chaque frame \\
+2 & Canal réel et codebook & M6 : $\mathbf{h}_t$ sur la scène réelle pour chaque BS--UE, gains des $N$ faisceaux, faisceau optimal (vérité terrain) \\
+3 & Scène jumelle & M2 : génération automatique de la scène Sionna à partir de l'état du jumeau (D2) \\
+4 & Prédicteur et sélection & M3 + M5 statiques : précision top-$K$ et perte de SNR pour J0, J1, J2, J$\infty$ \\
+5 & Prédiction et blocages & M4 : Kalman, commutation anticipée de BS/faisceau, comparaison au suivi réactif \\
+6 & Extension (selon D1) & B : précodage numérique multi-UE ; ou M7 : calibration des matériaux (J3) \\
+7 & Évaluation et rapport & Courbe fidélité $\to$ surcoût, tableau des références, discussion \\
+\end{tabularx}
+\end{table}
+
+% ============================================================
+\section{Limites à assumer dès le départ}
+% ============================================================
+\begin{itemize}
+  \item \textbf{Réalité simulée.} La \og réalité \fg{} est elle aussi un ray tracing Sionna. On
+        contrôle l'écart jumeau/réalité, mais on ne capture pas tout ce qu'un vrai canal
+        contient. Les perturbations de matériaux et les objets absents du jumeau en atténuent
+        l'effet, sans le supprimer.
+  \item \textbf{Phase du canal.} Le jumeau ne prédira pas la phase à 28~GHz (cf. D1) ; c'est
+        une limite physique, pas d'implémentation, et elle justifie de garder un court balayage.
+  \item \textbf{Variabilité GPU.} La diffusion diffuse varie d'un run à l'autre, comme en phase 5 ;
+        on garde la même pratique (plusieurs tirages, moyenne $\pm$ écart-type).
+  \item \textbf{TX4} n'a pas de vue caméra sur les acteurs : ce n'est pas bloquant ici, la position
+        des objets venant de la fusion multi-n\oe uds, mais TX4 reste un candidat de commutation
+        intéressant justement parce que sa géométrie est différente.
+\end{itemize}
+
+\vspace{0.4cm}
+\noindent\colorbox{tabchoice}{\parbox{\dimexpr\linewidth-2\fboxsep}{%
+\textbf{Synthèse des recommandations.} D1 : sélection de faisceau assistée par jumeau, prédictive
+et sensible aux blocages (A), avec précodage hybride (B) en extension. D2 : carte statique connue
++ objets perçus. D3 : carte de canal précalculée + correction de blocage, avec ray tracing en
+ligne comme référence. D4 : jumeau FR1+FR2+vision, beamforming en FR2.}}
+
+\end{document}

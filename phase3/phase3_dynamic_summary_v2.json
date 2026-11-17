@@ -8,7 +8,7 @@
   "frames": [
     {
       "frame": 0,
-      "radar_points": 20899,
+      "radar_points": 16784,
       "detections_by_node": {
         "tx1": 1,
         "tx2": 1,
@@ -17,8 +17,8 @@
         "ped_a": 2,
         "ped_b": 2
       },
-      "fused_objects": 20899,
-      "vision_matched": 353,
+      "fused_objects": 16784,
+      "vision_matched": 337,
       "actor_xy": {
         "car": [
           -34.06949234008789,
@@ -36,7 +36,7 @@
     },
     {
       "frame": 1,
-      "radar_points": 20810,
+      "radar_points": 16731,
       "detections_by_node": {
         "tx1": 1,
         "tx2": 2,
@@ -45,7 +45,7 @@
         "ped_a": 2,
         "ped_b": 2
       },
-      "fused_objects": 20810,
+      "fused_objects": 16731,
       "vision_matched": 315,
       "actor_xy": {
         "car": [
@@ -64,7 +64,7 @@
     },
     {
       "frame": 2,
-      "radar_points": 20845,
+      "radar_points": 16730,
       "detections_by_node": {
         "tx1": 1,
         "tx2": 3,
@@ -73,8 +73,8 @@
         "ped_a": 2,
         "ped_b": 2
       },
-      "fused_objects": 20845,
-      "vision_matched": 331,
+      "fused_objects": 16730,
+      "vision_matched": 316,
       "actor_xy": {
         "car": [
           -36.65080451965332,
@@ -92,7 +92,7 @@
     },
     {
       "frame": 3,
-      "radar_points": 20846,
+      "radar_points": 16735,
       "detections_by_node": {
         "tx1": 1,
         "tx2": 4,
@@ -101,8 +101,8 @@
         "ped_a": 2,
         "ped_b": 2
       },
-      "fused_objects": 20846,
-      "vision_matched": 328,
+      "fused_objects": 16735,
+      "vision_matched": 312,
       "actor_xy": {
         "car": [
           -37.941460609436035,
@@ -120,7 +120,7 @@
     },
     {
       "frame": 4,
-      "radar_points": 20845,
+      "radar_points": 16758,
       "detections_by_node": {
         "tx1": 3,
         "tx2": 3,
@@ -129,8 +129,8 @@
         "ped_a": 2,
         "ped_b": 2
       },
-      "fused_objects": 20845,
-      "vision_matched": 322,
+      "fused_objects": 16758,
+      "vision_matched": 314,
       "actor_xy": {
         "car": [
           -39.23211669921875,
@@ -148,7 +148,7 @@
     },
     {
       "frame": 5,
-      "radar_points": 21002,
+      "radar_points": 16894,
       "detections_by_node": {
         "tx1": 3,
         "tx2": 3,
@@ -157,8 +157,8 @@
         "ped_a": 2,
         "ped_b": 2
       },
-      "fused_objects": 21002,
-      "vision_matched": 391,
+      "fused_objects": 16894,
+      "vision_matched": 376,
       "actor_xy": {
         "car": [
           -40.522772789001465,

@@ -1,0 +1,376 @@
+{
+ "acteurs": {
+  "bus": {
+   "classe": "bus",
+   "centre_initial": [
+    -107.25,
+    40.83000183105469,
+    1.7300000190734863
+   ],
+   "trajectoire_m": 113.0,
+   "vitesse_m_s": 12.0,
+   "ue": false
+  },
+  "car": {
+   "classe": "car",
+   "centre_initial": [
+    -34.06999969482422,
+    92.75,
+    1.649999976158142
+   ],
+   "trajectoire_m": 122.4,
+   "vitesse_m_s": 8.0,
+   "ue": true
+  },
+  "car2": {
+   "classe": "car",
+   "centre_initial": [
+    119.62000274658203,
+    -26.709999084472656,
+    1.3700000047683716
+   ],
+   "trajectoire_m": 258.6,
+   "vitesse_m_s": 8.0,
+   "ue": true
+  },
+  "ped_a": {
+   "classe": "pedestrian",
+   "centre_initial": [
+    -46.36000061035156,
+    60.7599983215332,
+    0.8999999761581421
+   ],
+   "trajectoire_m": 130.3,
+   "vitesse_m_s": 1.399999976158142,
+   "ue": true
+  },
+  "ped_b": {
+   "classe": "pedestrian",
+   "centre_initial": [
+    -51.79999923706055,
+    106.95999908447266,
+    0.8999999761581421
+   ],
+   "trajectoire_m": 0.0,
+   "vitesse_m_s": 0.0,
+   "ue": true
+  },
+  "ped_c": {
+   "classe": "pedestrian",
+   "centre_initial": [
+    -29.010000228881836,
+    116.31999969482422,
+    0.8999999761581421
+   ],
+   "trajectoire_m": 0.0,
+   "vitesse_m_s": 0.0,
+   "ue": true
+  },
+  "ped_d": {
+   "classe": "pedestrian",
+   "centre_initial": [
+    -49.70000076293945,
+    -23.020000457763672,
+    0.9399999976158142
+   ],
+   "trajectoire_m": 94.1,
+   "vitesse_m_s": 1.399999976158142,
+   "ue": true
+  },
+  "ped_e": {
+   "classe": "pedestrian",
+   "centre_initial": [
+    -46.59000015258789,
+    72.01000213623047,
+    0.8399999737739563
+   ],
+   "trajectoire_m": 61.5,
+   "vitesse_m_s": 1.399999976158142,
+   "ue": true
+  }
+ },
+ "rapprochements": [
+  {
+   "paire": [
+    "bus",
+    "ped_c"
+   ],
+   "ecart_min_m": 0.99,
+   "t_s": 9.3,
+   "frames_en_contact": 0
+  },
+  {
+   "paire": [
+    "car",
+    "ped_e"
+   ],
+   "ecart_min_m": 2.44,
+   "t_s": 3.4,
+   "frames_en_contact": 0
+  }
+ ],
+ "los": {
+  "car": {
+   "bs_visibles_t0": [
+    "TX1",
+    "TX2",
+    "TX3"
+   ],
+   "changements": [
+    {
+     "t_s": 5.2,
+     "perd": [],
+     "gagne": [
+      "TX5"
+     ],
+     "obstacle": {}
+    }
+   ],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": []
+  },
+  "car2": {
+   "bs_visibles_t0": [
+    "TX5"
+   ],
+   "changements": [
+    {
+     "t_s": 2.4,
+     "perd": [],
+     "gagne": [
+      "TX4"
+     ],
+     "obstacle": {}
+    },
+    {
+     "t_s": 2.7,
+     "perd": [],
+     "gagne": [
+      "TX1"
+     ],
+     "obstacle": {}
+    },
+    {
+     "t_s": 4.1,
+     "perd": [
+      "TX1"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX1": "batiment/sol"
+     }
+    },
+    {
+     "t_s": 6.1,
+     "perd": [],
+     "gagne": [
+      "TX3"
+     ],
+     "obstacle": {}
+    },
+    {
+     "t_s": 7.1,
+     "perd": [
+      "TX3"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX3": "batiment/sol"
+     }
+    }
+   ],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": []
+  },
+  "ped_a": {
+   "bs_visibles_t0": [
+    "TX1",
+    "TX2",
+    "TX3"
+   ],
+   "changements": [
+    {
+     "t_s": 4.1,
+     "perd": [
+      "TX1"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX1": "acteur:ped_a"
+     }
+    }
+   ],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": [
+    [
+     "TX1",
+     "acteur:ped_a"
+    ]
+   ]
+  },
+  "ped_b": {
+   "bs_visibles_t0": [
+    "TX1",
+    "TX2",
+    "TX3"
+   ],
+   "changements": [
+    {
+     "t_s": 7.1,
+     "perd": [
+      "TX3"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX3": "acteur:bus"
+     }
+    },
+    {
+     "t_s": 7.4,
+     "perd": [],
+     "gagne": [
+      "TX3"
+     ],
+     "obstacle": {}
+    }
+   ],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": [
+    [
+     "TX3",
+     "acteur:bus"
+    ],
+    [
+     "TX4",
+     "acteur:bus"
+    ],
+    [
+     "TX5",
+     "acteur:bus"
+    ]
+   ]
+  },
+  "ped_c": {
+   "bs_visibles_t0": [
+    "TX1",
+    "TX2",
+    "TX3",
+    "TX5"
+   ],
+   "changements": [
+    {
+     "t_s": 8.6,
+     "perd": [
+      "TX5"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX5": "acteur:bus"
+     }
+    },
+    {
+     "t_s": 8.7,
+     "perd": [
+      "TX3"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX3": "acteur:bus"
+     }
+    },
+    {
+     "t_s": 8.9,
+     "perd": [
+      "TX2"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX2": "acteur:bus"
+     }
+    }
+   ],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": [
+    [
+     "TX2",
+     "acteur:bus"
+    ],
+    [
+     "TX3",
+     "acteur:bus"
+    ],
+    [
+     "TX4",
+     "acteur:bus"
+    ],
+    [
+     "TX5",
+     "acteur:bus"
+    ]
+   ]
+  },
+  "ped_d": {
+   "bs_visibles_t0": [
+    "TX2",
+    "TX3"
+   ],
+   "changements": [
+    {
+     "t_s": 0.6,
+     "perd": [],
+     "gagne": [
+      "TX5"
+     ],
+     "obstacle": {}
+    },
+    {
+     "t_s": 4.5,
+     "perd": [],
+     "gagne": [
+      "TX1"
+     ],
+     "obstacle": {}
+    },
+    {
+     "t_s": 8.5,
+     "perd": [
+      "TX5"
+     ],
+     "gagne": [],
+     "obstacle": {
+      "TX5": "acteur:ped_d"
+     }
+    }
+   ],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": [
+    [
+     "TX5",
+     "acteur:ped_d"
+    ]
+   ]
+  },
+  "ped_e": {
+   "bs_visibles_t0": [
+    "TX1",
+    "TX2"
+   ],
+   "changements": [],
+   "frames_sans_los": 0,
+   "blocages_par_acteur": [
+    [
+     "TX3",
+     "acteur:ped_e"
+    ],
+    [
+     "TX4",
+     "acteur:ped_e"
+    ],
+    [
+     "TX5",
+     "acteur:ped_e"
+    ]
+   ]
+  }
+ }
+}
